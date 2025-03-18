@@ -1,0 +1,42 @@
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "generated.grpc.vimonitoringservice";
+option java_outer_classname = "IVMonitoringServiceImpl";
+
+package smart_healthcare;
+
+// monitoring service
+service IVMonitoringService {
+    // 1. fetch and monitor patient's drip condition (normal too fast or too slow)
+    // Unary
+    rpc GetIVStatus (IVStatusRequest) returns (IVStatusResponse);
+
+    // 2. monitor the infusion status
+    // server streaming
+    rpc StreamAllIVStatus (RequestAllStatus) returns (stream IVStatusResponse);
+}
+
+// method 1 messages
+// request the status
+message IVStatusRequest {
+    string patientId = 1;
+}
+
+// return status
+message IVStatusResponse {
+    string patientId = 1;
+    string patientName = 2;
+    double remaining = 3;  // the rest of the capacity (ml)
+    int32 status = 4;  // 0: plenty 1: almost finish 2: alert
+}
+
+
+// method 2 request and response
+// all drip status
+
+message RequestAllStatus {
+    string nurseId = 1;
+}
+

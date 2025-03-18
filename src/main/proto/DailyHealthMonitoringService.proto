@@ -1,0 +1,45 @@
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "generated.grpc.dailyhealthmonitoringservice";
+option java_outer_classname = "DailyHealthMonitoringServiceImpl";
+
+package smart_healthcare;
+
+// monitoring service
+service DailyHealthMonitoringService {
+    // 1. fetch and monitor patient's vital signs regularly
+    // unary 
+    rpc CollectPatientData (CollectRequest) returns (CollectResponse);
+    
+    // 2. nurse upload abnormal patients  client streaming
+    rpc ReportAbnormalPatients (stream PatientAlertRequest) returns (ReportStatusResponse);
+}
+
+// method 1 request and response
+// the vital data of the patient
+// contains temperature, pulse, heart Rate 
+
+message CollectRequest {
+    string patientId = 1;
+    double heartRate = 2;  
+    double pulse = 3;  
+    double temperature = 4;
+}
+
+message CollectResponse {
+// depends on the received data, reminder the
+    string result = 1;
+}
+
+// method 2 messages
+message PatientAlertRequest {
+    string patientId = 1;
+    string patientName = 2;
+    string message = 3;  // what kind of abnormal info and short describe
+}
+
+message ReportStatusResponse {
+    string message = 1;  // result
+}

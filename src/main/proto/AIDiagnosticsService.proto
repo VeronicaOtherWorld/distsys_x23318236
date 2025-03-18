@@ -1,0 +1,40 @@
+syntax = "proto3"; 
+option java_multiple_files = true;
+option java_package = "generated.grpc.aidiagnosticsservice";
+option java_outer_classname = "AIDiagnosticsServiceImpl";
+package healthcare; 
+ 
+service AIDiagnosticsService {
+
+    // 1. doctor keeps sending patient information 
+    // then ai gives a diagnose
+    rpc StreamPatientData(stream PatientDataRequest) returns (AIDiagnosticsResponse);
+ 
+    // 2. a doctor and AI start communicating in real time
+    // bi streaming
+    rpc StreamAIDiagnosis (stream DoctorRequest) returns (stream AIResponse);
+}
+ 
+// method 1 messages
+message PatientDataRequest {
+    string patientId = 1;
+    string dataType = 2;
+    string value = 3; 
+} 
+
+message AIDiagnosticsResponse {
+    string patient_id = 1;
+    string diagnosis = 2;  //the diagnose result
+    string recommendation = 3; // give doctor some advice how to make a treatment plan
+} 
+
+// method 2 messages
+message DoctorRequest {
+    string doctorId = 1;
+    string message = 2;
+} 
+
+message AIResponse {
+    string patientId = 1;
+    string answer = 2;
+}
