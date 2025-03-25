@@ -2,7 +2,7 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "generated.grpc.vimonitoringservice";
+option java_package = "grpc.generated.vimonitoringservice";
 option java_outer_classname = "IVMonitoringServiceImpl";
 
 package smart_healthcare;
