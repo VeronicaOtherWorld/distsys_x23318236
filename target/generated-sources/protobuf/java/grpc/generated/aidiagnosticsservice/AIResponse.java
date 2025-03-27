@@ -16,7 +16,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private AIResponse() {
-    patientId_ = "";
+    doctorId_ = "";
     answer_ = "";
   }
 
@@ -53,7 +53,7 @@ private static final long serialVersionUID = 0L;
           case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            patientId_ = s;
+            doctorId_ = s;
             break;
           }
           case 18: {
@@ -96,38 +96,38 @@ private static final long serialVersionUID = 0L;
             grpc.generated.aidiagnosticsservice.AIResponse.class, grpc.generated.aidiagnosticsservice.AIResponse.Builder.class);
   }
 
-  public static final int PATIENTID_FIELD_NUMBER = 1;
-  private volatile java.lang.Object patientId_;
+  public static final int DOCTORID_FIELD_NUMBER = 1;
+  private volatile java.lang.Object doctorId_;
   /**
-   * <code>string patientId = 1;</code>
-   * @return The patientId.
+   * <code>string doctorId = 1;</code>
+   * @return The doctorId.
    */
   @java.lang.Override
-  public java.lang.String getPatientId() {
-    java.lang.Object ref = patientId_;
+  public java.lang.String getDoctorId() {
+    java.lang.Object ref = doctorId_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      patientId_ = s;
+      doctorId_ = s;
       return s;
     }
   }
   /**
-   * <code>string patientId = 1;</code>
-   * @return The bytes for patientId.
+   * <code>string doctorId = 1;</code>
+   * @return The bytes for doctorId.
    */
   @java.lang.Override
   public com.google.protobuf.ByteString
-      getPatientIdBytes() {
-    java.lang.Object ref = patientId_;
+      getDoctorIdBytes() {
+    java.lang.Object ref = doctorId_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      patientId_ = b;
+      doctorId_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -186,8 +186,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(patientId_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, patientId_);
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(doctorId_)) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, doctorId_);
     }
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(answer_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, answer_);
@@ -201,8 +201,8 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(patientId_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, patientId_);
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(doctorId_)) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, doctorId_);
     }
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(answer_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, answer_);
@@ -222,8 +222,8 @@ private static final long serialVersionUID = 0L;
     }
     grpc.generated.aidiagnosticsservice.AIResponse other = (grpc.generated.aidiagnosticsservice.AIResponse) obj;
 
-    if (!getPatientId()
-        .equals(other.getPatientId())) return false;
+    if (!getDoctorId()
+        .equals(other.getDoctorId())) return false;
     if (!getAnswer()
         .equals(other.getAnswer())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
@@ -237,8 +237,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + PATIENTID_FIELD_NUMBER;
-    hash = (53 * hash) + getPatientId().hashCode();
+    hash = (37 * hash) + DOCTORID_FIELD_NUMBER;
+    hash = (53 * hash) + getDoctorId().hashCode();
     hash = (37 * hash) + ANSWER_FIELD_NUMBER;
     hash = (53 * hash) + getAnswer().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
@@ -374,7 +374,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      patientId_ = "";
+      doctorId_ = "";
 
       answer_ = "";
 
@@ -404,7 +404,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public grpc.generated.aidiagnosticsservice.AIResponse buildPartial() {
       grpc.generated.aidiagnosticsservice.AIResponse result = new grpc.generated.aidiagnosticsservice.AIResponse(this);
-      result.patientId_ = patientId_;
+      result.doctorId_ = doctorId_;
       result.answer_ = answer_;
       onBuilt();
       return result;
@@ -454,8 +454,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(grpc.generated.aidiagnosticsservice.AIResponse other) {
       if (other == grpc.generated.aidiagnosticsservice.AIResponse.getDefaultInstance()) return this;
-      if (!other.getPatientId().isEmpty()) {
-        patientId_ = other.patientId_;
+      if (!other.getDoctorId().isEmpty()) {
+        doctorId_ = other.doctorId_;
         onChanged();
       }
       if (!other.getAnswer().isEmpty()) {
@@ -491,78 +491,78 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object patientId_ = "";
+    private java.lang.Object doctorId_ = "";
     /**
-     * <code>string patientId = 1;</code>
-     * @return The patientId.
+     * <code>string doctorId = 1;</code>
+     * @return The doctorId.
      */
-    public java.lang.String getPatientId() {
-      java.lang.Object ref = patientId_;
+    public java.lang.String getDoctorId() {
+      java.lang.Object ref = doctorId_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        patientId_ = s;
+        doctorId_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string patientId = 1;</code>
-     * @return The bytes for patientId.
+     * <code>string doctorId = 1;</code>
+     * @return The bytes for doctorId.
      */
     public com.google.protobuf.ByteString
-        getPatientIdBytes() {
-      java.lang.Object ref = patientId_;
+        getDoctorIdBytes() {
+      java.lang.Object ref = doctorId_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        patientId_ = b;
+        doctorId_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string patientId = 1;</code>
-     * @param value The patientId to set.
+     * <code>string doctorId = 1;</code>
+     * @param value The doctorId to set.
      * @return This builder for chaining.
      */
-    public Builder setPatientId(
+    public Builder setDoctorId(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      patientId_ = value;
+      doctorId_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string patientId = 1;</code>
+     * <code>string doctorId = 1;</code>
      * @return This builder for chaining.
      */
-    public Builder clearPatientId() {
+    public Builder clearDoctorId() {
       
-      patientId_ = getDefaultInstance().getPatientId();
+      doctorId_ = getDefaultInstance().getDoctorId();
       onChanged();
       return this;
     }
     /**
-     * <code>string patientId = 1;</code>
-     * @param value The bytes for patientId to set.
+     * <code>string doctorId = 1;</code>
+     * @param value The bytes for doctorId to set.
      * @return This builder for chaining.
      */
-    public Builder setPatientIdBytes(
+    public Builder setDoctorIdBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      patientId_ = value;
+      doctorId_ = value;
       onChanged();
       return this;
     }

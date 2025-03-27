@@ -23,7 +23,7 @@ message PatientDataRequest {
 } 
 
 message AIDiagnosticsResponse {
-    string patient_id = 1;
+    string patientId = 1;
     string diagnosis = 2;  //the diagnose result
     string recommendation = 3; // give doctor some advice how to make a treatment plan
 } 
@@ -35,6 +35,6 @@ message DoctorRequest {
 } 
 
 message AIResponse {
-    string patientId = 1;
+    string doctorId = 1;
     string answer = 2;
 }

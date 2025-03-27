@@ -17,6 +17,7 @@ import grpc.generated.aidiagnosticsservice.AIResponse;
 import grpc.generated.aidiagnosticsservice.AIDiagnosticsServiceGrpc;
 import grpc.generated.aidiagnosticsservice.AIDiagnosticsServiceGrpc.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
@@ -29,10 +30,11 @@ public class AIDiagnosticsClient {
     // add blockingStub
     // for Unary RPC
     private static AIDiagnosticsServiceBlockingStub blockingStub;
+    private static ManagedChannel channel;
 
     public static void main(String[] args) throws InterruptedException {
 
-        ManagedChannel channel = ManagedChannelBuilder
+        channel = ManagedChannelBuilder
                 .forAddress("localhost", 50051)
                 .usePlaintext()
                 .build();
@@ -48,7 +50,8 @@ public class AIDiagnosticsClient {
 
         // method 1 client streaming sending infos to server
         requestPatientInfo();
-        // method 2 call the client streaming and get the return message
+        // method 2 bi-di
+        requestAIResponse();
     }
 
     // 1. steaming sending patients' information to server
@@ -108,11 +111,59 @@ public class AIDiagnosticsClient {
             requestObserver.onCompleted();
 
             // give enough time to send request
-            Thread.sleep(10000);
+            Thread.sleep(1000);
         } catch (RuntimeException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    // 2. bi-di streaming doctor commutiate with ai
+    
+    /**
+    * through requestObserver.onNext() send message
+    * through responseObserver.onNext() receive message
+     */
+    private static void requestAIResponse() throws InterruptedException {
+        
+        // get the response from ai
+        StreamObserver<AIResponse> responseObserver = new StreamObserver<AIResponse>(){
+            @Override
+            public void onNext(AIResponse v) {
+                System.out.println("----------- ai response is " + v.getAnswer());
+            }
+
+            @Override
+            public void onError(Throwable thrwbl) {
+                System.out.println("----------- thrwbl" + thrwbl);
+            }
+
+            @Override
+            public void onCompleted() {
+                System.out.println("----------- ai response is end");
+            }
+        };
+        
+        // get the doctor request and send to server
+        StreamObserver<DoctorRequest> requestObserver = 
+                asyncStub.streamAIDiagnosis(responseObserver);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("please enter the question");
+        while(true){
+            String msg = sc.nextLine();
+            if("exit".equalsIgnoreCase(msg.trim())){
+                requestObserver.onCompleted();
+                break;
+            }
+            DoctorRequest request = DoctorRequest.newBuilder()
+                    .setDoctorId("17")
+                    .setMessage(msg)
+                    .build();
+            requestObserver.onNext(request);
+        }
+        Thread.sleep(1000);
+        channel.shutdown();
+        
     }
 }

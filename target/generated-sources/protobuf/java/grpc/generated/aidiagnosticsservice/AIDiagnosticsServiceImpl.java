@@ -45,19 +45,19 @@ public final class AIDiagnosticsServiceImpl {
     java.lang.String[] descriptorData = {
       "\n\032AIDiagnosticsService.proto\022\nhealthcare" +
       "\"H\n\022PatientDataRequest\022\021\n\tpatientId\030\001 \001(" +
-      "\t\022\020\n\010dataType\030\002 \001(\t\022\r\n\005value\030\003 \001(\t\"V\n\025AI" +
-      "DiagnosticsResponse\022\022\n\npatient_id\030\001 \001(\t\022" +
-      "\021\n\tdiagnosis\030\002 \001(\t\022\026\n\016recommendation\030\003 \001" +
-      "(\t\"2\n\rDoctorRequest\022\020\n\010doctorId\030\001 \001(\t\022\017\n" +
-      "\007message\030\002 \001(\t\"/\n\nAIResponse\022\021\n\tpatientI" +
-      "d\030\001 \001(\t\022\016\n\006answer\030\002 \001(\t2\274\001\n\024AIDiagnostic" +
-      "sService\022X\n\021StreamPatientData\022\036.healthca" +
-      "re.PatientDataRequest\032!.healthcare.AIDia" +
-      "gnosticsResponse(\001\022J\n\021StreamAIDiagnosis\022" +
-      "\031.healthcare.DoctorRequest\032\026.healthcare." +
-      "AIResponse(\0010\001BA\n#grpc.generated.aidiagn" +
-      "osticsserviceB\030AIDiagnosticsServiceImplP" +
-      "\001b\006proto3"
+      "\t\022\020\n\010dataType\030\002 \001(\t\022\r\n\005value\030\003 \001(\t\"U\n\025AI" +
+      "DiagnosticsResponse\022\021\n\tpatientId\030\001 \001(\t\022\021" +
+      "\n\tdiagnosis\030\002 \001(\t\022\026\n\016recommendation\030\003 \001(" +
+      "\t\"2\n\rDoctorRequest\022\020\n\010doctorId\030\001 \001(\t\022\017\n\007" +
+      "message\030\002 \001(\t\".\n\nAIResponse\022\020\n\010doctorId\030" +
+      "\001 \001(\t\022\016\n\006answer\030\002 \001(\t2\274\001\n\024AIDiagnosticsS" +
+      "ervice\022X\n\021StreamPatientData\022\036.healthcare" +
+      ".PatientDataRequest\032!.healthcare.AIDiagn" +
+      "osticsResponse(\001\022J\n\021StreamAIDiagnosis\022\031." +
+      "healthcare.DoctorRequest\032\026.healthcare.AI" +
+      "Response(\0010\001BA\n#grpc.generated.aidiagnos" +
+      "ticsserviceB\030AIDiagnosticsServiceImplP\001b" +
+      "\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -86,7 +86,7 @@ public final class AIDiagnosticsServiceImpl {
     internal_static_healthcare_AIResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_healthcare_AIResponse_descriptor,
-        new java.lang.String[] { "PatientId", "Answer", });
+        new java.lang.String[] { "DoctorId", "Answer", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

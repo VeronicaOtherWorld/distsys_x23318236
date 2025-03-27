@@ -91,7 +91,7 @@ public class AIDiagnosticsService extends AIDiagnosticsServiceImplBase {
                         .setDiagnosis("heart disease")
                         .setRecommendation("Depends on those materials that received, the condition is very serious and may require emergency surgery.")
                         .build();
-                
+
                 // call next method only once
                 responseObserver.onNext(response);
                 // completed
@@ -104,24 +104,43 @@ public class AIDiagnosticsService extends AIDiagnosticsServiceImplBase {
      * <pre>
      * 2. a doctor and AI start communicating in real time
      * bi streaming
+     * ai response to doctor
      * </pre>
+     */
+    
+    /**
+    * through responseObserver.onNext() response message
+    * through onNext(request) receive request
      */
     public StreamObserver<DoctorRequest> streamAIDiagnosis(
             StreamObserver<AIResponse> responseObserver) {
+
+        System.out.println("---------------- bi-di streaming streamAIDiagnosis method----------------");
+
         return new StreamObserver<DoctorRequest>() {
             @Override
             public void onNext(DoctorRequest v) {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                String doctorMsg = v.getMessage();
+                // simuate the response
+                String reply = "======= AI's advice: pay attention to " + doctorMsg + "=======";
+                System.out.println("doctor request send message "
+                        + " id: " + v.getDoctorId()
+                        + " message: " + v.getMessage());
+                AIResponse response = AIResponse.newBuilder()
+                        .setDoctorId("17")
+                        .setAnswer(reply)
+                        .build();
+                responseObserver.onNext(response);
             }
 
             @Override
             public void onError(Throwable thrwbl) {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                System.out.println("error" + thrwbl);
             }
 
             @Override
             public void onCompleted() {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                responseObserver.onCompleted();
             }
         };
     }

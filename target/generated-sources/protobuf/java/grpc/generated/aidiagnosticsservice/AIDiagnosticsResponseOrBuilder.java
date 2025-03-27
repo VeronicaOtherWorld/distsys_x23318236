@@ -8,12 +8,12 @@ public interface AIDiagnosticsResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string patient_id = 1;</code>
+   * <code>string patientId = 1;</code>
    * @return The patientId.
    */
   java.lang.String getPatientId();
   /**
-   * <code>string patient_id = 1;</code>
+   * <code>string patientId = 1;</code>
    * @return The bytes for patientId.
    */
   com.google.protobuf.ByteString

@@ -8,16 +8,16 @@ public interface AIResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string patientId = 1;</code>
-   * @return The patientId.
+   * <code>string doctorId = 1;</code>
+   * @return The doctorId.
    */
-  java.lang.String getPatientId();
+  java.lang.String getDoctorId();
   /**
-   * <code>string patientId = 1;</code>
-   * @return The bytes for patientId.
+   * <code>string doctorId = 1;</code>
+   * @return The bytes for doctorId.
    */
   com.google.protobuf.ByteString
-      getPatientIdBytes();
+      getDoctorIdBytes();
 
   /**
    * <code>string answer = 2;</code>
