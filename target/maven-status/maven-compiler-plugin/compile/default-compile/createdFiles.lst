@@ -8,6 +8,7 @@ grpc/generated/dailyhealthmonitoringservice/DailyHealthMonitoringServiceGrpc$Dai
 grpc/generated/vimonitoringservice/IVMonitoringServiceGrpc$3.class
 grpc/generated/dailyhealthmonitoringservice/DailyHealthMonitoringServiceGrpc$1.class
 grpc/generated/aidiagnosticsservice/AIDiagnosticsServiceGrpc$1.class
+com/smart_healthcare/AIDiagnosticsService$1.class
 grpc/generated/aidiagnosticsservice/AIResponse.class
 com/smart_healthcare/HealthcareDailyService$1.class
 com/smart_healthcare/IVMonitoringService.class
@@ -21,6 +22,7 @@ grpc/generated/vimonitoringservice/IVStatusResponse.class
 grpc/generated/aidiagnosticsservice/DoctorRequestOrBuilder.class
 grpc/generated/aidiagnosticsservice/DoctorRequest$1.class
 grpc/generated/vimonitoringservice/RequestAllStatusOrBuilder.class
+com/smart_healthcare/AIDiagnosticsService.class
 grpc/generated/aidiagnosticsservice/AIDiagnosticsServiceGrpc$MethodHandlers.class
 grpc/generated/vimonitoringservice/IVMonitoringServiceGrpc$MethodHandlers.class
 grpc/generated/vimonitoringservice/IVMonitoringServiceGrpc$IVMonitoringServiceBaseDescriptorSupplier.class
@@ -68,8 +70,10 @@ grpc/generated/aidiagnosticsservice/AIDiagnosticsResponseOrBuilder.class
 com/smart_healthcare/IVMonitoringClient.class
 grpc/generated/vimonitoringservice/IVStatusResponse$1.class
 grpc/generated/vimonitoringservice/IVMonitoringServiceGrpc$IVMonitoringServiceFutureStub.class
+com/smart_healthcare/AIDiagnosticsClient$1.class
 grpc/generated/vimonitoringservice/RequestAllStatus$Builder.class
 grpc/generated/aidiagnosticsservice/AIResponseOrBuilder.class
+com/smart_healthcare/AIDiagnosticsClient.class
 grpc/generated/vimonitoringservice/IVMonitoringServiceGrpc$IVMonitoringServiceBlockingStub.class
 grpc/generated/vimonitoringservice/RequestAllStatus$1.class
 grpc/generated/vimonitoringservice/RequestAllStatus.class
@@ -87,3 +91,4 @@ grpc/generated/aidiagnosticsservice/AIDiagnosticsServiceGrpc$2.class
 grpc/generated/vimonitoringservice/IVStatusRequest$Builder.class
 grpc/generated/vimonitoringservice/IVMonitoringServiceGrpc$IVMonitoringServiceStub.class
 grpc/generated/aidiagnosticsservice/AIDiagnosticsResponse$1.class
+com/smart_healthcare/AIDiagnosticsService$2.class

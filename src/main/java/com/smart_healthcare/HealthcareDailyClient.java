@@ -7,7 +7,6 @@ package com.smart_healthcare;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
-import java.time.LocalTime;
 
 // messages
 import grpc.generated.dailyhealthmonitoringservice.CollectRequest;
