@@ -23,7 +23,7 @@ import java.util.ArrayList;
  *
  * @author luyi
  */
-public class HealthcareDaliyClient {
+public class HealthcareDailyClient {
 
     // a non-blocking stub to make an asynchronous call
     private static DailyHealthMonitoringServiceStub asyncStub;

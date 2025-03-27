@@ -22,19 +22,19 @@ import java.util.ArrayList;
  *
  * @author luyi
  */
-public class HealthcareDaliyService extends DailyHealthMonitoringServiceImplBase {
+public class HealthcareDailyService extends DailyHealthMonitoringServiceImplBase {
 
-    private static final Logger logger = Logger.getLogger(HealthcareDaliyService.class.getName());
+    private static final Logger logger = Logger.getLogger(HealthcareDailyService.class.getName());
 
     public static void main(String[] args) {
 
-        HealthcareDaliyService greeterserver = new HealthcareDaliyService();
+        HealthcareDailyService dailyserver = new HealthcareDailyService();
 
         int port = 50051;
 
         try {
             Server server = ServerBuilder.forPort(port)
-                    .addService(greeterserver)
+                    .addService(dailyserver)
                     .build()
                     .start();
             logger.info("Server started, listening on " + port);
@@ -106,7 +106,7 @@ public class HealthcareDaliyService extends DailyHealthMonitoringServiceImplBase
             // send back a message, tell client how many paitents information we received
             // use responseObserver.onNext()
             public void onCompleted() {
-                String res = "-------we've receviced " + requestList.size() + "records!";
+                String res = "-------we've receviced " + requestList.size() + " records!";
                 System.out.println(res);
                 ReportStatusResponse response = ReportStatusResponse.newBuilder().setMessage(res).build();
                 

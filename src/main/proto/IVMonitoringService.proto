@@ -32,7 +32,6 @@ message IVStatusResponse {
     int32 status = 4;  // 0: plenty 1: almost finish 2: alert
 }
 
-
 // method 2 request and response
 // all drip status
 
