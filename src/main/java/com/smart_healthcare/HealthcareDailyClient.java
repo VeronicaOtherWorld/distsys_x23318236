@@ -4,9 +4,11 @@
  */
 package com.smart_healthcare;
 
+import com.google.common.base.Verify;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
+import io.grpc.Status;
 
 // messages
 import grpc.generated.dailyhealthmonitoringservice.CollectRequest;
@@ -17,6 +19,7 @@ import grpc.generated.dailyhealthmonitoringservice.ReportStatusResponse;
 import grpc.generated.dailyhealthmonitoringservice.DailyHealthMonitoringServiceGrpc;
 import grpc.generated.dailyhealthmonitoringservice.DailyHealthMonitoringServiceGrpc.*;
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
 
 /**
  *
@@ -48,7 +51,7 @@ public class HealthcareDailyClient {
 
         // call the method to request send collection data
         requestPatientData();
-        
+
         // call the client streaming and get the return message
         requestAbormalResult();
     }
@@ -72,6 +75,7 @@ public class HealthcareDailyClient {
 
     // 2.send a series of abnormal patients' information
     private static void requestAbormalResult() throws InterruptedException {
+        final CountDownLatch latch = new CountDownLatch(1);
         System.out.println("Client Streaming - requestAbormalResult ");
 
         // observer if we get the response
@@ -83,8 +87,24 @@ public class HealthcareDailyClient {
             }
 
             @Override
-            public void onError(Throwable thrwbl) {
-                thrwbl.printStackTrace();
+            public void onError(Throwable t) {
+                Status status = Status.fromThrowable(t);
+                switch (status.getCode()) {
+                    case INVALID_ARGUMENT:
+                        System.out.println("wrong parameter: " + status.getDescription());
+                        break;
+                    case UNAUTHENTICATED:
+                        System.out.println("please login");
+                        break;
+                    case INTERNAL:
+                        System.out.println("inner error");
+                        break;
+                    case UNAVAILABLE:
+                        System.out.println("cannot connect to server");
+                        break;
+                    default:
+                        System.out.println("ohter:" + status);
+                }
             }
 
             @Override
@@ -125,12 +145,12 @@ public class HealthcareDailyClient {
                     .build());
 
             Thread.sleep(500);
-            
+
             // after finishing, tell server all done
-             requestObserver.onCompleted();
-             
+            requestObserver.onCompleted();
+
             // give enough time to send request
-             Thread.sleep(10000);
+            Thread.sleep(10000);
 
         } catch (RuntimeException e) {
             e.printStackTrace();

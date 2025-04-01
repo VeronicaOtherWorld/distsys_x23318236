@@ -15,6 +15,7 @@ com/smart_healthcare/AIDiagnosticsClient$2.class
 com/smart_healthcare/IVMonitoringService.class
 grpc/generated/aidiagnosticsservice/AIDiagnosticsServiceGrpc$AIDiagnosticsServiceMethodDescriptorSupplier.class
 grpc/generated/aidiagnosticsservice/AIResponse$Builder.class
+com/smart_healthcare/HealthcareDailyClient$2.class
 grpc/generated/dailyhealthmonitoringservice/DailyHealthMonitoringServiceGrpc$MethodHandlers.class
 grpc/generated/aidiagnosticsservice/AIDiagnosticsServiceGrpc$AIDiagnosticsServiceBaseDescriptorSupplier.class
 grpc/generated/aidiagnosticsservice/AIDiagnosticsResponse.class

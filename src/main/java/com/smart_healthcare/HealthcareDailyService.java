@@ -15,6 +15,7 @@ import grpc.generated.dailyhealthmonitoringservice.DailyHealthMonitoringServiceI
 import grpc.generated.dailyhealthmonitoringservice.*;
 import grpc.generated.dailyhealthmonitoringservice.DailyHealthMonitoringServiceGrpc.DailyHealthMonitoringServiceImplBase;
 import static grpc.generated.dailyhealthmonitoringservice.DailyHealthMonitoringServiceGrpc.getReportAbnormalPatientsMethod;
+import io.grpc.Status;
 import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
 import java.util.ArrayList;
 
@@ -56,7 +57,7 @@ public class HealthcareDailyService extends DailyHealthMonitoringServiceImplBase
     /**
      * <pre>
      * 1. fetch and monitor patient's vital signs regularly
-     * unary 
+     * unary
      * </pre>
      */
     public void collectPatientData(CollectRequest request, StreamObserver<CollectResponse> responseObserver) {
@@ -67,33 +68,40 @@ public class HealthcareDailyService extends DailyHealthMonitoringServiceImplBase
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
-    
-       /**
+
+    /**
      * <pre>
-     * 2. nurse upload abnormal patients  
+     * 2. nurse upload abnormal patients
      * client streaming
      * </pre>
+     *
      * @param responseObserver - response to the client is return via this
      * object
      * @return
      */
     public StreamObserver<PatientAlertRequest> reportAbnormalPatients(
-        StreamObserver<ReportStatusResponse> responseObserver) {
+            StreamObserver<ReportStatusResponse> responseObserver) {
         // this method should gather multiple request from the client
         // server uses stream observer that gather the requests one by one in onNext()
         // after receiving all requests, i will give a response result in onCompleted()
         // this method returns a observer object
         // client side can create a instance of StreamObserver to observer the response
         System.out.println("reportAbnormalPatients method");
-      return new StreamObserver<PatientAlertRequest>() {
-          ArrayList<PatientAlertRequest> requestList = new ArrayList();
+        return new StreamObserver<PatientAlertRequest>() {
+            ArrayList<PatientAlertRequest> requestList = new ArrayList();
+
             @Override
             public void onNext(PatientAlertRequest v) {
-                System.out.println("----receive message, the id is " + v.getPatientId()
-                        + ", the name is " + v.getPatientName() 
-                        + ", the abnormal message is " + v.getMessage());
-                requestList.add(v);
-                
+                responseObserver.onError(
+                        Status.INVALID_ARGUMENT
+                                .withDescription("User ID is required")
+                                .asRuntimeException()
+                );
+//                System.out.println("----receive message, the id is " + v.getPatientId()
+//                        + ", the name is " + v.getPatientName() 
+//                        + ", the abnormal message is " + v.getMessage());
+//                requestList.add(v);
+
             }
 
             @Override
@@ -109,12 +117,12 @@ public class HealthcareDailyService extends DailyHealthMonitoringServiceImplBase
                 String res = "-------we've receviced " + requestList.size() + " records!";
                 System.out.println(res);
                 ReportStatusResponse response = ReportStatusResponse.newBuilder().setMessage(res).build();
-                
+
                 //call this method only once
                 responseObserver.onNext(response);
                 // finished
                 responseObserver.onCompleted();
-                
+
             }
         };
     }
