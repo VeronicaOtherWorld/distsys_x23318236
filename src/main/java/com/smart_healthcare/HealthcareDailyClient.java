@@ -75,7 +75,7 @@ public class HealthcareDailyClient {
 
     // 2.send a series of abnormal patients' information
     private static void requestAbormalResult() throws InterruptedException {
-        final CountDownLatch latch = new CountDownLatch(1);
+//        final CountDownLatch latch = new CountDownLatch(1);
         System.out.println("Client Streaming - requestAbormalResult ");
 
         // observer if we get the response
@@ -121,7 +121,7 @@ public class HealthcareDailyClient {
             ArrayList abnormalPatients = new ArrayList();
             //add 1 patient
             requestObserver.onNext(PatientAlertRequest.newBuilder()
-                    .setPatientId("024")
+                    .setPatientId("")
                     .setPatientName("john")
                     .setMessage("high press")
                     .build());
@@ -147,15 +147,19 @@ public class HealthcareDailyClient {
             Thread.sleep(500);
 
             // after finishing, tell server all done
-            requestObserver.onCompleted();
+//            requestObserver.onCompleted();
 
             // give enough time to send request
             Thread.sleep(10000);
 
         } catch (RuntimeException e) {
             e.printStackTrace();
+            responseObserver.onCompleted();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } finally {
+            // ensure this is closed in the end
+            requestObserver.onCompleted();
         }
 
     }

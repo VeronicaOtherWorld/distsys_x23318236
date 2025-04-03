@@ -92,21 +92,27 @@ public class HealthcareDailyService extends DailyHealthMonitoringServiceImplBase
 
             @Override
             public void onNext(PatientAlertRequest v) {
-                responseObserver.onError(
-                        Status.INVALID_ARGUMENT
-                                .withDescription("User ID is required")
-                                .asRuntimeException()
-                );
-//                System.out.println("----receive message, the id is " + v.getPatientId()
-//                        + ", the name is " + v.getPatientName() 
-//                        + ", the abnormal message is " + v.getMessage());
-//                requestList.add(v);
+                // mock validate if the id is empty
+                if (v.getPatientId() == null || v.getPatientId().isEmpty()) {
+                    responseObserver.onError(
+                            Status.INVALID_ARGUMENT
+                                    .withDescription("Patient ID is required!")
+                                    .asRuntimeException()
+                    );
+                    // finish the progress
+                    return;
+                }
+                // if the message is legal, add to arraylist
+                System.out.println("----receive message, the id is " + v.getPatientId()
+                        + ", the name is " + v.getPatientName()
+                        + ", the abnormal message is " + v.getMessage());
+                requestList.add(v);
 
             }
 
             @Override
             public void onError(Throwable thrwbl) {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+               System.err.println("servet returns error: " + Status.fromThrowable(thrwbl));
             }
 
             @Override
