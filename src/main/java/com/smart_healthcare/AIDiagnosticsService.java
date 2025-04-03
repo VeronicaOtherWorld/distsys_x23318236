@@ -4,6 +4,7 @@
  */
 package com.smart_healthcare;
 
+import com.smart_healthcare.jmDNS.ServiceRegistration;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -38,6 +39,10 @@ public class AIDiagnosticsService extends AIDiagnosticsServiceImplBase {
                     .start();
             logger.info("Server started, listening on " + port);
             System.out.println("***** Server started, listening on" + port);
+
+            // 2. register jsdns
+            ServiceRegistration.register("_grpc._tcp.local.", "AIDiagnoseticService", port, "gRPC AI Diagnosetic service");
+            
             server.awaitTermination();
 
         } catch (IOException e) {

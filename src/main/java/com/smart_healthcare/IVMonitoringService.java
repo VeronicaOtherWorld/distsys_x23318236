@@ -4,6 +4,7 @@
  */
 package com.smart_healthcare;
 
+import com.smart_healthcare.jmDNS.ServiceRegistration;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -40,6 +41,9 @@ public class IVMonitoringService extends IVMonitoringServiceImplBase {
                     .start();
             logger.info("Server started, listening on " + port);
             System.out.println("***** Server started, listening on" + port);
+
+            // 2. register jsdns
+            ServiceRegistration.register("_grpc._tcp.local.", "IVMonitoringService", port, "gRPC IVMonitoring service");
             server.awaitTermination();
 
         } catch (IOException e) {
@@ -82,7 +86,7 @@ public class IVMonitoringService extends IVMonitoringServiceImplBase {
         // this method should get all patients' VI status return back and display
 
         // simulate return a group of data
-        String[] names = {"Liam",  "Ava", "Oliver", "Peter", "James"  };
+        String[] names = {"Liam", "Ava", "Oliver", "Peter", "James"};
         for (int i = 0; i < 5; i++) {
             double num = 1 + new Random().nextDouble() * (100 - 1);
             // random number 0-2

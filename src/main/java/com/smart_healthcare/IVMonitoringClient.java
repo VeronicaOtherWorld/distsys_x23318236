@@ -4,6 +4,7 @@
  */
 package com.smart_healthcare;
 
+import com.smart_healthcare.jmDNS.ServiceDiscovery;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
@@ -16,8 +17,6 @@ import grpc.generated.vimonitoringservice.RequestAllStatus;
 
 import grpc.generated.vimonitoringservice.IVMonitoringServiceGrpc;
 import grpc.generated.vimonitoringservice.IVMonitoringServiceGrpc.IVMonitoringServiceBlockingStub;
-import grpc.generated.vimonitoringservice.*;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -25,15 +24,56 @@ import java.util.Iterator;
  * @author luyi
  */
 public class IVMonitoringClient {
+
     // a non-blocking stub to make an asynchronous call
     private static IVMonitoringServiceGrpc.IVMonitoringServiceStub asyncStub;
     // add blockingStub 
     // for Unary RPC
     private static IVMonitoringServiceGrpc.IVMonitoringServiceBlockingStub blockingStub;
-        public static void main(String[] args) throws InterruptedException {
 
+    public static void main(String[] args) throws InterruptedException {
+        //1. find and connect to the discovery
+        ServiceDiscovery.discoverGrpcService();
+        // call the method to request one patient VI situation
+//        requestVIStatus();
+
+        // call the method to request all stituation
+//        requestAllVIStatus();
+
+    }
+
+    // request a patient vi information
+    public static void requestVIStatus() {
+        System.out.println("------===== Requesting vi status...=====----");
+        IVStatusRequest request = IVStatusRequest.newBuilder()
+                .setPatientId("200")
+                .build();
+        IVStatusResponse response = blockingStub.getIVStatus(request);
+        System.out.println("-------request result is : " + response.getPatientId()
+                + " name: " + response.getPatientName()
+                + " remaning: " + response.getRemaining()
+                + " status: " + response.getStatus());
+    }
+
+    // request all patients' VI status
+    public static void requestAllVIStatus() {
+
+        RequestAllStatus requestAll = RequestAllStatus.newBuilder().setNurseId("001").build();
+
+        Iterator<IVStatusResponse> item = blockingStub.streamAllIVStatus(requestAll);
+
+        while (item.hasNext()) {
+            IVStatusResponse response = item.next();
+            System.out.println("----receive message, the id is " + response.getPatientId()
+                    + ", the name is " + response.getPatientName()
+                    + ", the remaining is " + response.getRemaining()
+                    + ", the status is " + response.getStatus());
+        }
+    }
+
+    public static void connectToServer(String host, int port) {
         ManagedChannel channel = ManagedChannelBuilder
-                .forAddress("localhost", 50051)
+                .forAddress(host, port)
                 .usePlaintext()
                 .build();
 
@@ -45,41 +85,6 @@ public class IVMonitoringClient {
 
         //        requestAverageTemperature();
         blockingStub = IVMonitoringServiceGrpc.newBlockingStub(channel);
-
-        // call the method to request one patient VI situation
-        requestVIStatus();
-        
-        // call the method to request all stituation
-        requestAllVIStatus();
-        
-    }
-        
-    // request a patient vi information
-    private static void requestVIStatus(){
-        System.out.println("------===== Requesting vi status...=====----");
-        IVStatusRequest request = IVStatusRequest.newBuilder()
-                .setPatientId("200")
-                .build();
-        IVStatusResponse response = blockingStub.getIVStatus(request);
-        System.out.println("-------request result is : " + response.getPatientId() 
-                + " name: " + response.getPatientName() 
-                + " remaning: " + response.getRemaining()
-                + " status: " + response.getStatus());
-    }
-
-    // request all patients' VI status
-    private static void requestAllVIStatus(){
-        
-        RequestAllStatus requestAll = RequestAllStatus.newBuilder().setNurseId("001").build();
-        
-        Iterator<IVStatusResponse> item = blockingStub.streamAllIVStatus(requestAll);
-        
-        while (item.hasNext()){
-            IVStatusResponse response = item.next();
-            System.out.println("----receive message, the id is " + response.getPatientId()
-                        + ", the name is " + response.getPatientName() 
-                        + ", the remaining is " + response.getRemaining()
-                        + ", the status is " + response.getStatus());
-        }
+        System.out.println("--------connect to grpc--------- " + host + ":" + port);
     }
 }

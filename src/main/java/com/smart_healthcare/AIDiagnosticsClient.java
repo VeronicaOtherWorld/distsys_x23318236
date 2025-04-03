@@ -4,6 +4,7 @@
  */
 package com.smart_healthcare;
 
+import com.smart_healthcare.jmDNS.ServiceDiscovery;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
@@ -34,28 +35,16 @@ public class AIDiagnosticsClient {
 
     public static void main(String[] args) throws InterruptedException {
 
-        channel = ManagedChannelBuilder
-                .forAddress("localhost", 50051)
-                .usePlaintext()
-                .build();
-
-        //non-blocking stub is for asynchronous calls
-        //client does not wait for server to complete before starting to read responses
-        //must use non-blocking stub for client streaming and bidirectional streaming
-        //can also use for Server Streaming asynchronously
-        asyncStub = AIDiagnosticsServiceGrpc.newStub(channel);
-
-//        requestAverageTemperature();
-        blockingStub = AIDiagnosticsServiceGrpc.newBlockingStub(channel);
-
+        //1. find and connect to the discovery
+        ServiceDiscovery.discoverGrpcService();
         // method 1 client streaming sending infos to server
-        requestPatientInfo();
+//        requestPatientInfo();
         // method 2 bi-di
-        requestAIResponse();
+//        requestAIResponse();
     }
 
     // 1. steaming sending patients' information to server
-    private static void requestPatientInfo() {
+    public static void requestPatientInfo() {
         System.out.println("--------Client Streaming - send info to server ------");
 
         //obseration teh result
@@ -125,7 +114,7 @@ public class AIDiagnosticsClient {
     * through requestObserver.onNext() send message
     * through responseObserver.onNext() receive message
      */
-    private static void requestAIResponse() throws InterruptedException {
+    public static void requestAIResponse() throws InterruptedException {
         
         // get the response from ai
         StreamObserver<AIResponse> responseObserver = new StreamObserver<AIResponse>(){
@@ -165,5 +154,22 @@ public class AIDiagnosticsClient {
         Thread.sleep(1000);
         channel.shutdown();
         
+    }
+        public static void connectToServer(String host, int port) {
+        ManagedChannel channel = ManagedChannelBuilder
+                .forAddress(host, port)
+                .usePlaintext()
+                .build();
+
+
+        //non-blocking stub is for asynchronous calls
+        //client does not wait for server to complete before starting to read responses
+        //must use non-blocking stub for client streaming and bidirectional streaming
+        //can also use for Server Streaming asynchronously
+        asyncStub = AIDiagnosticsServiceGrpc.newStub(channel);
+
+//        requestAverageTemperature();
+        blockingStub = AIDiagnosticsServiceGrpc.newBlockingStub(channel);
+        System.out.println("--------connect to grpc--------- " + host + ":" + port);
     }
 }

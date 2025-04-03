@@ -18,6 +18,10 @@ import static grpc.generated.dailyhealthmonitoringservice.DailyHealthMonitoringS
 import io.grpc.Status;
 import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
 import java.util.ArrayList;
+import com.smart_healthcare.jmDNS.ServiceRegistration;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Enumeration;
 
 /**
  *
@@ -29,6 +33,7 @@ public class HealthcareDailyService extends DailyHealthMonitoringServiceImplBase
 
     public static void main(String[] args) {
 
+        // 1,start the grpc, in 50051 port
         HealthcareDailyService dailyserver = new HealthcareDailyService();
 
         int port = 50051;
@@ -40,6 +45,10 @@ public class HealthcareDailyService extends DailyHealthMonitoringServiceImplBase
                     .start();
             logger.info("Server started, listening on " + port);
             System.out.println("***** Server started, listening on" + port);
+
+            // 2. register jsdns
+            ServiceRegistration.register("_grpc._tcp.local.", "DailyHealthcareService", port, "gRPC daily healthcare service");
+
             server.awaitTermination();
 
         } catch (IOException e) {
@@ -112,7 +121,7 @@ public class HealthcareDailyService extends DailyHealthMonitoringServiceImplBase
 
             @Override
             public void onError(Throwable thrwbl) {
-               System.err.println("servet returns error: " + Status.fromThrowable(thrwbl));
+                System.err.println("servet returns error: " + Status.fromThrowable(thrwbl));
             }
 
             @Override

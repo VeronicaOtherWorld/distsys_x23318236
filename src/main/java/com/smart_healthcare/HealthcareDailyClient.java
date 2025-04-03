@@ -18,8 +18,13 @@ import grpc.generated.dailyhealthmonitoringservice.ReportStatusResponse;
 
 import grpc.generated.dailyhealthmonitoringservice.DailyHealthMonitoringServiceGrpc;
 import grpc.generated.dailyhealthmonitoringservice.DailyHealthMonitoringServiceGrpc.*;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
+
+import com.smart_healthcare.jmDNS.ServiceDiscovery;
 
 /**
  *
@@ -33,33 +38,33 @@ public class HealthcareDailyClient {
     // for Unary RPC
     private static DailyHealthMonitoringServiceGrpc.DailyHealthMonitoringServiceBlockingStub blockingStub;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, UnknownHostException, IOException {
+        //1. find and connect to the discovery
+        ServiceDiscovery.discoverGrpcService();
+        //2. builder channel
+//        ManagedChannel channel = ManagedChannelBuilder
+//                .forAddress("localhost", 50051)
+//                .usePlaintext()
+//                .build();
 
-        ManagedChannel channel = ManagedChannelBuilder
-                .forAddress("localhost", 50051)
-                .usePlaintext()
-                .build();
 
         //non-blocking stub is for asynchronous calls
         //client does not wait for server to complete before starting to read responses
         //must use non-blocking stub for client streaming and bidirectional streaming
         //can also use for Server Streaming asynchronously 
-        asyncStub = DailyHealthMonitoringServiceGrpc.newStub(channel);
-
+//        asyncStub = DailyHealthMonitoringServiceGrpc.newStub(channel);
 //        requestAverageTemperature();
-        blockingStub = DailyHealthMonitoringServiceGrpc.newBlockingStub(channel);
-
+//        blockingStub = DailyHealthMonitoringServiceGrpc.newBlockingStub(channel);
         // call the method to request send collection data
-        requestPatientData();
-
+//        requestPatientData();
         // call the client streaming and get the return message
-        requestAbormalResult();
+//        requestAbormalResult();
     }
 
     // request patient information
     // unary
     // 1.send info to the server
-    private static void requestPatientData() {
+    public static void requestPatientData() {
         System.out.println("------===== Requesting monitor patient data...=====----");
         CollectRequest collectionRequest = CollectRequest.newBuilder()
                 .setPatientId("001")
@@ -74,7 +79,7 @@ public class HealthcareDailyClient {
     }
 
     // 2.send a series of abnormal patients' information
-    private static void requestAbormalResult() throws InterruptedException {
+    public static void requestAbormalResult() throws InterruptedException {
 //        final CountDownLatch latch = new CountDownLatch(1);
         System.out.println("Client Streaming - requestAbormalResult ");
 
@@ -147,8 +152,7 @@ public class HealthcareDailyClient {
             Thread.sleep(500);
 
             // after finishing, tell server all done
-//            requestObserver.onCompleted();
-
+            // requestObserver.onCompleted();
             // give enough time to send request
             Thread.sleep(10000);
 
@@ -162,5 +166,17 @@ public class HealthcareDailyClient {
             requestObserver.onCompleted();
         }
 
+    }
+    // 在 HealthcareDailyClient.java 中封装一个连接用的方法：
+
+    public static void connectToServer(String host, int port) {
+        ManagedChannel channel = ManagedChannelBuilder
+                .forAddress(host, port)
+                .usePlaintext()
+                .build();
+
+        asyncStub = DailyHealthMonitoringServiceGrpc.newStub(channel);
+        blockingStub = DailyHealthMonitoringServiceGrpc.newBlockingStub(channel); // connect
+        System.out.println("--------connect to grpc--------- " + host + ":" + port);
     }
 }
