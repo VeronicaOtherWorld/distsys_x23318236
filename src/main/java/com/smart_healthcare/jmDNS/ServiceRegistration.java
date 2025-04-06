@@ -9,8 +9,10 @@ package com.smart_healthcare.jmDNS;
  * @author luyi
  */
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
 import java.util.logging.Level;
@@ -26,7 +28,7 @@ public class ServiceRegistration {
         register("_grpc._tcp.local.", "IVMonitoringService", 50051, "IV monitor health care");
         register("_grpc._tcp.local.", "AIDiagnoseticService", 50051, "AI Diagnosetic");
         // Wait a bit
-        Thread.sleep(20000);
+        Thread.sleep(1000);
     }
 
     public static void register(String type, String serviceName, int port, String description) {
@@ -39,8 +41,9 @@ public class ServiceRegistration {
             // Create a JmDNS instance
 //            JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
             InetAddress ipv4Address = getFirstNonLoopbackIPv4Address();
-            System.out.println("👀👀👀 使用 IPv4 地址注册服务: " + ipv4Address.getHostAddress());
+            System.out.println("👀👀👀 : register" + ipv4Address.getHostAddress());
             JmDNS jmdns = JmDNS.create(ipv4Address);
+//                JmDNS jmdns = JmDNS.create();
 
             // Register a service
             // Note that this code does not start the service. 
@@ -53,26 +56,27 @@ public class ServiceRegistration {
             System.out.println(e.getMessage());
         }
     }
-    
-    public static InetAddress getFirstNonLoopbackIPv4Address() {
-        try {
-            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
-            while (interfaces.hasMoreElements()) {
-                NetworkInterface iface = interfaces.nextElement();
-                if (!iface.isUp() || iface.isLoopback() || iface.isVirtual()) {
-                    continue;
-                }
-                Enumeration<InetAddress> addresses = iface.getInetAddresses();
-                while (addresses.hasMoreElements()) {
-                    InetAddress addr = addresses.nextElement();
-                    if (addr instanceof java.net.Inet4Address && !addr.isLoopbackAddress()) {
-                        return addr;
-                    }
+
+    // sometimes will return inet6address cause error
+    // only return ipv4
+    private static InetAddress getFirstNonLoopbackIPv4Address() throws SocketException {
+
+        Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+        while (interfaces.hasMoreElements()) {
+            NetworkInterface iface = interfaces.nextElement();
+            if (iface.isLoopback() || !iface.isUp()) {
+                continue;
+            }
+
+            Enumeration<InetAddress> addresses = iface.getInetAddresses();
+            while (addresses.hasMoreElements()) {
+                InetAddress addr = addresses.nextElement();
+                if (addr instanceof Inet4Address) {
+                    System.out.println("Found address: " + addr.getHostAddress());
+                    return addr;
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        throw new RuntimeException("❌ 没找到合适的 IPv4 地址");
+        return null;
     }
 }

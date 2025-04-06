@@ -67,15 +67,15 @@ public class ServiceDiscovery {
             switch (serviceName) {
                 case "HealthcareService":
                     HealthcareDailyClient.connectToServer(host, port);
-                    HealthcareDailyClient.requestPatientData();
+//                    HealthcareDailyClient.requestPatientData();
                     break;
                 case "IVMonitoringService":
                     IVMonitoringClient.connectToServer(host, port);
-                    IVMonitoringClient.requestVIStatus();
+//                    IVMonitoringClient.requestVIStatus();
                     break;
                 case "AIDiagnoseticService":
                     AIDiagnosticsClient.connectToServer(host, port);
-                    AIDiagnosticsClient.requestPatientInfo();
+//                    AIDiagnosticsClient.requestPatientInfo();
                     break;
                 default:
                     System.out.println("⚠️ Unknown service: " + serviceName);
@@ -89,15 +89,16 @@ public class ServiceDiscovery {
 
             // Create a JmDNS instance
 //            JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+//                JmDNS jmdns = JmDNS.create();
             InetAddress ipv4Address = getFirstNonLoopbackIPv4Address();
-            System.out.println("🦴👀👀👀 使用 IPv4 地址注册服务: " + ipv4Address.getHostAddress());
+            System.out.println("👀👀👀 : register" + ipv4Address.getHostAddress());
             JmDNS jmdns = JmDNS.create(ipv4Address);
             // Add a service listener
             jmdns.addServiceListener("_grpc._tcp.local.", new SampleListener());
 
             try {
                 // Wait a bit
-                Thread.sleep(20000);
+                Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(ServiceDiscovery.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -108,11 +109,14 @@ public class ServiceDiscovery {
             System.out.println(e.getMessage());
         }
     }
+    // sometimes will return inet6address cause error
+    // only return ipv4
 
-    public static InetAddress getFirstNonLoopbackIPv4Address() throws SocketException {
-        Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces();
-        while (en.hasMoreElements()) {
-            NetworkInterface iface = en.nextElement();
+    private static InetAddress getFirstNonLoopbackIPv4Address() throws SocketException {
+
+        Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+        while (interfaces.hasMoreElements()) {
+            NetworkInterface iface = interfaces.nextElement();
             if (iface.isLoopback() || !iface.isUp()) {
                 continue;
             }
@@ -120,11 +124,13 @@ public class ServiceDiscovery {
             Enumeration<InetAddress> addresses = iface.getInetAddresses();
             while (addresses.hasMoreElements()) {
                 InetAddress addr = addresses.nextElement();
-                if (addr instanceof Inet4Address && !addr.isLoopbackAddress()) {
+                if (addr instanceof Inet4Address) {
+                    System.out.println("Found address: " + addr.getHostAddress());
+                    // return addr
                     return addr;
                 }
             }
         }
-        throw new SocketException("No suitable IPv4 address found.");
+        return null;
     }
 }

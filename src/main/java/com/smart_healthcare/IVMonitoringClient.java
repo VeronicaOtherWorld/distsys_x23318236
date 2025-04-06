@@ -26,10 +26,10 @@ import java.util.Iterator;
 public class IVMonitoringClient {
 
     // a non-blocking stub to make an asynchronous call
-    private static IVMonitoringServiceGrpc.IVMonitoringServiceStub asyncStub;
+    public static IVMonitoringServiceGrpc.IVMonitoringServiceStub asyncStub;
     // add blockingStub 
     // for Unary RPC
-    private static IVMonitoringServiceGrpc.IVMonitoringServiceBlockingStub blockingStub;
+    public static IVMonitoringServiceGrpc.IVMonitoringServiceBlockingStub blockingStub;
 
     public static void main(String[] args) throws InterruptedException {
         //1. find and connect to the discovery
@@ -43,10 +43,10 @@ public class IVMonitoringClient {
     }
 
     // request a patient vi information
-    public static void requestVIStatus() {
+    public static void requestVIStatus(String patientId) {
         System.out.println("------===== Requesting vi status...=====----");
         IVStatusRequest request = IVStatusRequest.newBuilder()
-                .setPatientId("200")
+                .setPatientId(patientId)
                 .build();
         IVStatusResponse response = blockingStub.getIVStatus(request);
         System.out.println("-------request result is : " + response.getPatientId()
@@ -56,9 +56,9 @@ public class IVMonitoringClient {
     }
 
     // request all patients' VI status
-    public static void requestAllVIStatus() {
+    public static void requestAllVIStatus(String nursetId) {
 
-        RequestAllStatus requestAll = RequestAllStatus.newBuilder().setNurseId("001").build();
+        RequestAllStatus requestAll = RequestAllStatus.newBuilder().setNurseId(nursetId).build();
 
         Iterator<IVStatusResponse> item = blockingStub.streamAllIVStatus(requestAll);
 

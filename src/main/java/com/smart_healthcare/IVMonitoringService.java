@@ -65,13 +65,42 @@ public class IVMonitoringService extends IVMonitoringServiceImplBase {
      */
     public void getIVStatus(IVStatusRequest request, StreamObserver<IVStatusResponse> responseObserver) {
         System.out.println("======================getIVStatus starting======================");
-        IVStatusResponse response = IVStatusResponse.newBuilder()
-                .setPatientId("200")
-                .setPatientName("amy")
-                .setRemaining(25.3)
-                .setStatus(1)
-                .build();
-        responseObserver.onNext(response);
+//        IVStatusResponse response = IVStatusResponse.newBuilder()
+//                .setPatientId("200")
+//                .setPatientName("amy")
+//                .setRemaining(25.3)
+//                .setStatus(1)
+//                .build();
+        IVStatusResponse.Builder response = IVStatusResponse.newBuilder();
+        String id = request.getPatientId();
+        // mock different cases
+        if (id.equals("1")) {
+            response
+                    .setPatientId("1")
+                    .setPatientName("Alice")
+                    .setRemaining(50.5)
+                    .setStatus(0);
+        } else if (id.equals("2")) {
+            response
+                    .setPatientId("200")
+                    .setPatientName("Bob")
+                    .setRemaining(30.2)
+                    .setStatus(1);
+        } else if(id.equals("3")) {
+            response
+                    .setPatientId(id)
+                    .setPatientName("Amy")
+                    .setRemaining(3)
+                    .setStatus(2);
+        } else {
+                        response
+                    .setPatientId(id)
+                    .setPatientName("not exist")
+                    .setRemaining(0.0)
+                    .setStatus(3);
+        }
+
+        responseObserver.onNext(response.build());
         responseObserver.onCompleted();
     }
 
@@ -89,12 +118,13 @@ public class IVMonitoringService extends IVMonitoringServiceImplBase {
         String[] names = {"Liam", "Ava", "Oliver", "Peter", "James"};
         for (int i = 0; i < 5; i++) {
             double num = 1 + new Random().nextDouble() * (100 - 1);
+            double newNum = Math.round(num * 10.0) / 10.0;
             // random number 0-2
             int statusNum = new Random().nextInt(3);
             IVStatusResponse response = IVStatusResponse.newBuilder()
-                    .setPatientId("40" + i)
+                    .setPatientId("10" + i)
                     .setPatientName(names[i])
-                    .setRemaining(num)
+                    .setRemaining(newNum)
                     .setStatus(statusNum)
                     .build();
             try {
