@@ -19,6 +19,7 @@
 /Users/luyi/Documents/semester 2/Distributed Systems/ca Project Proposal Submission - Due Friday March 14th @23-59PM/healthcare/target/generated-sources/protobuf/java/grpc/generated/dailyhealthmonitoringservice/DailyHealthMonitoringServiceImpl.java
 /Users/luyi/Documents/semester 2/Distributed Systems/ca Project Proposal Submission - Due Friday March 14th @23-59PM/healthcare/target/generated-sources/protobuf/grpc-java/grpc/generated/dailyhealthmonitoringservice/DailyHealthMonitoringServiceGrpc.java
 /Users/luyi/Documents/semester 2/Distributed Systems/ca Project Proposal Submission - Due Friday March 14th @23-59PM/healthcare/target/generated-sources/protobuf/java/grpc/generated/dailyhealthmonitoringservice/PatientAlertRequestOrBuilder.java
+/Users/luyi/Documents/semester 2/Distributed Systems/ca Project Proposal Submission - Due Friday March 14th @23-59PM/healthcare/src/main/java/com/smart_healthcare/GUI/AIDiagnosticsGUI.java
 /Users/luyi/Documents/semester 2/Distributed Systems/ca Project Proposal Submission - Due Friday March 14th @23-59PM/healthcare/target/generated-sources/protobuf/java/grpc/generated/aidiagnosticsservice/AIDiagnosticsResponseOrBuilder.java
 /Users/luyi/Documents/semester 2/Distributed Systems/ca Project Proposal Submission - Due Friday March 14th @23-59PM/healthcare/target/generated-sources/protobuf/grpc-java/grpc/generated/aidiagnosticsservice/AIDiagnosticsServiceGrpc.java
 /Users/luyi/Documents/semester 2/Distributed Systems/ca Project Proposal Submission - Due Friday March 14th @23-59PM/healthcare/src/main/java/com/smart_healthcare/jmDNS/ServiceRegistration.java
@@ -26,6 +27,7 @@
 /Users/luyi/Documents/semester 2/Distributed Systems/ca Project Proposal Submission - Due Friday March 14th @23-59PM/healthcare/src/main/java/com/smart_healthcare/HealthcareDailyClient.java
 /Users/luyi/Documents/semester 2/Distributed Systems/ca Project Proposal Submission - Due Friday March 14th @23-59PM/healthcare/target/generated-sources/protobuf/java/grpc/generated/dailyhealthmonitoringservice/CollectRequestOrBuilder.java
 /Users/luyi/Documents/semester 2/Distributed Systems/ca Project Proposal Submission - Due Friday March 14th @23-59PM/healthcare/src/main/java/com/smart_healthcare/HealthcareDailyService.java
+/Users/luyi/Documents/semester 2/Distributed Systems/ca Project Proposal Submission - Due Friday March 14th @23-59PM/healthcare/src/main/java/com/smart_healthcare/GUI/HealthcareDailyGUI.java
 /Users/luyi/Documents/semester 2/Distributed Systems/ca Project Proposal Submission - Due Friday March 14th @23-59PM/healthcare/target/generated-sources/protobuf/java/grpc/generated/aidiagnosticsservice/AIDiagnosticsServiceImpl.java
 /Users/luyi/Documents/semester 2/Distributed Systems/ca Project Proposal Submission - Due Friday March 14th @23-59PM/healthcare/target/generated-sources/protobuf/java/grpc/generated/dailyhealthmonitoringservice/ReportStatusResponse.java
 /Users/luyi/Documents/semester 2/Distributed Systems/ca Project Proposal Submission - Due Friday March 14th @23-59PM/healthcare/target/generated-sources/protobuf/java/grpc/generated/vimonitoringservice/IVStatusRequest.java

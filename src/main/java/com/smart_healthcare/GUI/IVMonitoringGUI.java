@@ -75,6 +75,7 @@ public class IVMonitoringGUI extends javax.swing.JFrame {
         runClient = new javax.swing.JButton();
         runRegister = new javax.swing.JButton();
         jSeparator7 = new javax.swing.JSeparator();
+        backBtn = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -346,6 +347,15 @@ public class IVMonitoringGUI extends javax.swing.JFrame {
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
+        backBtn.setBackground(new java.awt.Color(102, 255, 51));
+        backBtn.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        backBtn.setText("back to main page");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -361,7 +371,9 @@ public class IVMonitoringGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(565, Short.MAX_VALUE))
+                .addGap(38, 38, 38)
+                .addComponent(backBtn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jSeparator7)
             .addComponent(jSeparator5)
         );
@@ -369,7 +381,9 @@ public class IVMonitoringGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(backBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -518,6 +532,18 @@ public class IVMonitoringGUI extends javax.swing.JFrame {
         serverThread.start();
     }//GEN-LAST:event_runRegisterActionPerformed
 
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        // TODO add your handling code here:
+        IVMonitoringClient.disconnect();
+        IVMonitoringService.disconnect();
+
+        // show the main page
+        new MainGUI().setVisible(true);
+
+        // hidden the VI page
+        this.setVisible(false);
+    }//GEN-LAST:event_backBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -562,6 +588,7 @@ public class IVMonitoringGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton allPatientBtn;
+    private javax.swing.JButton backBtn;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;

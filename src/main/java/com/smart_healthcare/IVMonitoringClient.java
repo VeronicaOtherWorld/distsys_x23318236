@@ -16,6 +16,7 @@ import grpc.generated.vimonitoringservice.IVStatusResponse;
 import grpc.generated.vimonitoringservice.RequestAllStatus;
 
 import grpc.generated.vimonitoringservice.IVMonitoringServiceGrpc;
+
 import grpc.generated.vimonitoringservice.IVMonitoringServiceGrpc.IVMonitoringServiceBlockingStub;
 import java.util.Iterator;
 
@@ -31,6 +32,8 @@ public class IVMonitoringClient {
     // for Unary RPC
     public static IVMonitoringServiceGrpc.IVMonitoringServiceBlockingStub blockingStub;
 
+    private static ManagedChannel channel;
+
     public static void main(String[] args) throws InterruptedException {
         //1. find and connect to the discovery
         ServiceDiscovery.discoverGrpcService();
@@ -39,7 +42,6 @@ public class IVMonitoringClient {
 
         // call the method to request all stituation
 //        requestAllVIStatus();
-
     }
 
     // request a patient vi information
@@ -72,7 +74,7 @@ public class IVMonitoringClient {
     }
 
     public static void connectToServer(String host, int port) {
-        ManagedChannel channel = ManagedChannelBuilder
+        channel = ManagedChannelBuilder
                 .forAddress(host, port)
                 .usePlaintext()
                 .build();
@@ -86,5 +88,12 @@ public class IVMonitoringClient {
         //        requestAverageTemperature();
         blockingStub = IVMonitoringServiceGrpc.newBlockingStub(channel);
         System.out.println("--------connect to grpc--------- " + host + ":" + port);
+    }
+
+    public static void disconnect() {
+        if (channel != null) {
+            channel.shutdownNow();
+            System.out.println("****************IVMonitoringServiceGrpc channel shutdown***************");
+        }
     }
 }

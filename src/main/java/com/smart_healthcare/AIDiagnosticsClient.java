@@ -31,8 +31,7 @@ public class AIDiagnosticsClient {
     // add blockingStub
     // for Unary RPC
     private static AIDiagnosticsServiceBlockingStub blockingStub;
-    private static ManagedChannel channel;
-
+private static ManagedChannel channel;
     public static void main(String[] args) throws InterruptedException {
 
         //1. find and connect to the discovery
@@ -109,15 +108,14 @@ public class AIDiagnosticsClient {
     }
 
     // 2. bi-di streaming doctor commutiate with ai
-    
     /**
-    * through requestObserver.onNext() send message
-    * through responseObserver.onNext() receive message
+     * through requestObserver.onNext() send message through
+     * responseObserver.onNext() receive message
      */
     public static void requestAIResponse() throws InterruptedException {
-        
+
         // get the response from ai
-        StreamObserver<AIResponse> responseObserver = new StreamObserver<AIResponse>(){
+        StreamObserver<AIResponse> responseObserver = new StreamObserver<AIResponse>() {
             @Override
             public void onNext(AIResponse v) {
                 System.out.println("----------- ai response is " + v.getAnswer());
@@ -133,15 +131,15 @@ public class AIDiagnosticsClient {
                 System.out.println("----------- ai response is end");
             }
         };
-        
+
         // get the doctor request and send to server
-        StreamObserver<DoctorRequest> requestObserver = 
-                asyncStub.streamAIDiagnosis(responseObserver);
+        StreamObserver<DoctorRequest> requestObserver
+                = asyncStub.streamAIDiagnosis(responseObserver);
         Scanner sc = new Scanner(System.in);
         System.out.println("please enter the question");
-        while(true){
+        while (true) {
             String msg = sc.nextLine();
-            if("exit".equalsIgnoreCase(msg.trim())){
+            if ("exit".equalsIgnoreCase(msg.trim())) {
                 requestObserver.onCompleted();
                 break;
             }
@@ -152,15 +150,15 @@ public class AIDiagnosticsClient {
             requestObserver.onNext(request);
         }
         Thread.sleep(1000);
-        channel.shutdown();
-        
+//        channel.shutdown();
+
     }
-        public static void connectToServer(String host, int port) {
+
+    public static void connectToServer(String host, int port) {
         ManagedChannel channel = ManagedChannelBuilder
                 .forAddress(host, port)
                 .usePlaintext()
                 .build();
-
 
         //non-blocking stub is for asynchronous calls
         //client does not wait for server to complete before starting to read responses
@@ -171,5 +169,11 @@ public class AIDiagnosticsClient {
 //        requestAverageTemperature();
         blockingStub = AIDiagnosticsServiceGrpc.newBlockingStub(channel);
         System.out.println("--------connect to grpc--------- " + host + ":" + port);
+    }
+       public static void disconnect() {
+        if (channel != null) {
+            channel.shutdownNow();
+            System.out.println("****************IVMonitoringServiceGrpc channel shutdown***************");
+        }
     }
 }

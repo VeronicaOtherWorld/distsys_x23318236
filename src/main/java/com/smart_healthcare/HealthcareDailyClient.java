@@ -31,13 +31,12 @@ import com.smart_healthcare.jmDNS.ServiceDiscovery;
  * @author luyi
  */
 public class HealthcareDailyClient {
-
+    private static ManagedChannel channel;
     // a non-blocking stub to make an asynchronous call
     private static DailyHealthMonitoringServiceStub asyncStub;
     // add blockingStub 
     // for Unary RPC
-    private static DailyHealthMonitoringServiceGrpc.DailyHealthMonitoringServiceBlockingStub blockingStub;
-
+    public static DailyHealthMonitoringServiceGrpc.DailyHealthMonitoringServiceBlockingStub blockingStub;
     public static void main(String[] args) throws InterruptedException, UnknownHostException, IOException {
         //1. find and connect to the discovery
         ServiceDiscovery.discoverGrpcService();
@@ -170,7 +169,7 @@ public class HealthcareDailyClient {
     // 在 HealthcareDailyClient.java 中封装一个连接用的方法：
 
     public static void connectToServer(String host, int port) {
-        ManagedChannel channel = ManagedChannelBuilder
+        channel = ManagedChannelBuilder
                 .forAddress(host, port)
                 .usePlaintext()
                 .build();
@@ -178,5 +177,11 @@ public class HealthcareDailyClient {
         asyncStub = DailyHealthMonitoringServiceGrpc.newStub(channel);
         blockingStub = DailyHealthMonitoringServiceGrpc.newBlockingStub(channel); // connect
         System.out.println("--------connect to grpc--------- " + host + ":" + port);
+    }
+       public static void disconnect() {
+        if (channel != null) {
+            channel.shutdownNow();
+            System.out.println("****************IVMonitoringServiceGrpc channel shutdown***************");
+        }
     }
 }

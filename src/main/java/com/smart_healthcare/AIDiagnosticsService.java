@@ -17,6 +17,8 @@ import grpc.generated.aidiagnosticsservice.*;
 import grpc.generated.aidiagnosticsservice.AIDiagnosticsServiceGrpc.AIDiagnosticsServiceImplBase;
 import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import javax.jmdns.JmDNS;
 
 /**
  *
@@ -25,7 +27,8 @@ import java.util.ArrayList;
 public class AIDiagnosticsService extends AIDiagnosticsServiceImplBase {
 
     private static final Logger logger = Logger.getLogger(HealthcareDailyService.class.getName());
-
+    private static Server server;
+    private static JmDNS jmdns;
     public static void main(String[] args) {
 
         AIDiagnosticsService aiserver = new AIDiagnosticsService();
@@ -33,7 +36,7 @@ public class AIDiagnosticsService extends AIDiagnosticsServiceImplBase {
         int port = 50051;
 
         try {
-            Server server = ServerBuilder.forPort(port)
+             server = ServerBuilder.forPort(port)
                     .addService(aiserver)
                     .build()
                     .start();
@@ -41,8 +44,8 @@ public class AIDiagnosticsService extends AIDiagnosticsServiceImplBase {
             System.out.println("***** Server started, listening on" + port);
 
             // 2. register jsdns
-            ServiceRegistration.register("_grpc._tcp.local.", "AIDiagnoseticService", port, "gRPC AI Diagnosetic service");
-            
+            ServiceRegistration.register("_grpc._tcp.local.", "AIDiagnosticsService", port, "gRPC AI Diagnosetic service");
+
             server.awaitTermination();
 
         } catch (IOException e) {
@@ -112,10 +115,9 @@ public class AIDiagnosticsService extends AIDiagnosticsServiceImplBase {
      * ai response to doctor
      * </pre>
      */
-    
     /**
-    * through responseObserver.onNext() response message
-    * through onNext(request) receive request
+     * through responseObserver.onNext() response message through
+     * onNext(request) receive request
      */
     public StreamObserver<DoctorRequest> streamAIDiagnosis(
             StreamObserver<AIResponse> responseObserver) {
@@ -148,5 +150,20 @@ public class AIDiagnosticsService extends AIDiagnosticsServiceImplBase {
                 responseObserver.onCompleted();
             }
         };
+    }
+        public static void disconnect() {
+        if (jmdns != null) {
+            jmdns.unregisterAllServices();
+            try {
+                jmdns.close();
+            } catch (IOException ex) {
+                Logger.getLogger(IVMonitoringService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("✅ jmDNS closed");
+        }
+        if (server != null) {
+            server.shutdownNow();
+            System.out.println("****************IVMonitoringServiceGrpc server shutdown***************");
+        }
     }
 }

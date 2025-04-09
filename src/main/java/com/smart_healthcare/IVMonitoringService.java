@@ -19,6 +19,7 @@ import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
+import javax.jmdns.JmDNS;
 
 /**
  *
@@ -27,6 +28,8 @@ import java.util.logging.Level;
 public class IVMonitoringService extends IVMonitoringServiceImplBase {
 
     private static final Logger logger = Logger.getLogger(IVMonitoringService.class.getName());
+    private static Server server;
+    private static JmDNS jmdns;
 
     public static void main(String[] args) {
 
@@ -35,7 +38,7 @@ public class IVMonitoringService extends IVMonitoringServiceImplBase {
         int port = 50051;
 
         try {
-            Server server = ServerBuilder.forPort(port)
+            server = ServerBuilder.forPort(port)
                     .addService(ivmonitorrserver)
                     .build()
                     .start();
@@ -86,14 +89,14 @@ public class IVMonitoringService extends IVMonitoringServiceImplBase {
                     .setPatientName("Bob")
                     .setRemaining(30.2)
                     .setStatus(1);
-        } else if(id.equals("3")) {
+        } else if (id.equals("3")) {
             response
                     .setPatientId(id)
                     .setPatientName("Amy")
                     .setRemaining(3)
                     .setStatus(2);
         } else {
-                        response
+            response
                     .setPatientId(id)
                     .setPatientName("not exist")
                     .setRemaining(0.0)
@@ -138,6 +141,22 @@ public class IVMonitoringService extends IVMonitoringServiceImplBase {
         // finish streaming
         responseObserver.onCompleted();
 
+    }
+
+    public static void disconnect() {
+        if (jmdns != null) {
+            jmdns.unregisterAllServices();
+            try {
+                jmdns.close();
+            } catch (IOException ex) {
+                Logger.getLogger(IVMonitoringService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("✅ jmDNS closed");
+        }
+        if (server != null) {
+            server.shutdownNow();
+            System.out.println("****************IVMonitoringServiceGrpc server shutdown***************");
+        }
     }
 
 }

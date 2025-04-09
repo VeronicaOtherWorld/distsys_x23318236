@@ -65,7 +65,7 @@ public class ServiceDiscovery {
 
             // call the method in the client side to create the channel
             switch (serviceName) {
-                case "HealthcareService":
+                case "HealthcareDailyService":
                     HealthcareDailyClient.connectToServer(host, port);
 //                    HealthcareDailyClient.requestPatientData();
                     break;
@@ -78,12 +78,13 @@ public class ServiceDiscovery {
 //                    AIDiagnosticsClient.requestPatientInfo();
                     break;
                 default:
-                    System.out.println("⚠️ Unknown service: " + serviceName);
+                    System.out.println("Unknown service: " + serviceName);
             }
         }
     }
 
     public static void discoverGrpcService() {
+
         System.out.println("🟢 listening...");
         try {
 

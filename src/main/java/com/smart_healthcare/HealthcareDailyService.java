@@ -22,6 +22,8 @@ import com.smart_healthcare.jmDNS.ServiceRegistration;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
+import java.util.logging.Level;
+import javax.jmdns.JmDNS;
 
 /**
  *
@@ -30,7 +32,8 @@ import java.util.Enumeration;
 public class HealthcareDailyService extends DailyHealthMonitoringServiceImplBase {
 
     private static final Logger logger = Logger.getLogger(HealthcareDailyService.class.getName());
-
+    private static Server server;
+    private static JmDNS jmdns;
     public static void main(String[] args) {
 
         // 1,start the grpc, in 50051 port
@@ -39,7 +42,7 @@ public class HealthcareDailyService extends DailyHealthMonitoringServiceImplBase
         int port = 50051;
 
         try {
-            Server server = ServerBuilder.forPort(port)
+            server = ServerBuilder.forPort(port)
                     .addService(dailyserver)
                     .build()
                     .start();
@@ -47,7 +50,7 @@ public class HealthcareDailyService extends DailyHealthMonitoringServiceImplBase
             System.out.println("***** Server started, listening on" + port);
 
             // 2. register jsdns
-            ServiceRegistration.register("_grpc._tcp.local.", "DailyHealthcareService", port, "gRPC daily healthcare service");
+            ServiceRegistration.register("_grpc._tcp.local.", "HealthcareDailyService", port, "gRPC daily healthcare service");
 
             server.awaitTermination();
 
@@ -141,5 +144,19 @@ public class HealthcareDailyService extends DailyHealthMonitoringServiceImplBase
             }
         };
     }
-
+        public static void disconnect() {
+        if (jmdns != null) {
+            jmdns.unregisterAllServices();
+            try {
+                jmdns.close();
+            } catch (IOException ex) {
+                Logger.getLogger(IVMonitoringService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("✅ jmDNS closed");
+        }
+        if (server != null) {
+            server.shutdownNow();
+            System.out.println("****************IVMonitoringServiceGrpc server shutdown***************");
+        }
+    }
 }

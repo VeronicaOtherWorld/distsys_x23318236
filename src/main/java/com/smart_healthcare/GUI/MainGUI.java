@@ -111,19 +111,28 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void dailyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dailyBtnActionPerformed
         // TODO add your handling code here:
+        new HealthcareDailyGUI().setVisible(true);
+
+        // hidden the main page
+        this.setVisible(false);
     }//GEN-LAST:event_dailyBtnActionPerformed
 
     private void IVBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IVBtnActionPerformed
         // TODO add your handling code here:
         // show the IV page
         new IVMonitoringGUI().setVisible(true);
-         
+
         // hidden the main page
         this.setVisible(false);
     }//GEN-LAST:event_IVBtnActionPerformed
 
     private void AIBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AIBtnActionPerformed
         // TODO add your handling code here:
+        // show the IV page
+        new AIDiagnosticsGUI().setVisible(true);
+
+        // hidden the main page
+        this.setVisible(false);
     }//GEN-LAST:event_AIBtnActionPerformed
 
     /**
