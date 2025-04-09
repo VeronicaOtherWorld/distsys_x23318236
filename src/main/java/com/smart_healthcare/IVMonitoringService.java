@@ -151,7 +151,7 @@ public class IVMonitoringService extends IVMonitoringServiceImplBase {
             } catch (IOException ex) {
                 Logger.getLogger(IVMonitoringService.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.println("✅ jmDNS closed");
+            System.out.println("----------------jmDNS closed------------------");
         }
         if (server != null) {
             server.shutdownNow();

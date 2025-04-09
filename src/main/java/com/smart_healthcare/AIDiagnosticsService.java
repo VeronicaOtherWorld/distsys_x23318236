@@ -29,6 +29,7 @@ public class AIDiagnosticsService extends AIDiagnosticsServiceImplBase {
     private static final Logger logger = Logger.getLogger(HealthcareDailyService.class.getName());
     private static Server server;
     private static JmDNS jmdns;
+
     public static void main(String[] args) {
 
         AIDiagnosticsService aiserver = new AIDiagnosticsService();
@@ -36,7 +37,7 @@ public class AIDiagnosticsService extends AIDiagnosticsServiceImplBase {
         int port = 50051;
 
         try {
-             server = ServerBuilder.forPort(port)
+            server = ServerBuilder.forPort(port)
                     .addService(aiserver)
                     .build()
                     .start();
@@ -151,15 +152,16 @@ public class AIDiagnosticsService extends AIDiagnosticsServiceImplBase {
             }
         };
     }
-        public static void disconnect() {
+
+    public static void disconnect() {
         if (jmdns != null) {
             jmdns.unregisterAllServices();
             try {
                 jmdns.close();
             } catch (IOException ex) {
-                Logger.getLogger(IVMonitoringService.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AIDiagnosticsService.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.println("✅ jmDNS closed");
+            System.out.println("----------------jmDNS closed------------------");
         }
         if (server != null) {
             server.shutdownNow();

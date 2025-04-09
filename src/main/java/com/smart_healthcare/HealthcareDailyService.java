@@ -34,6 +34,7 @@ public class HealthcareDailyService extends DailyHealthMonitoringServiceImplBase
     private static final Logger logger = Logger.getLogger(HealthcareDailyService.class.getName());
     private static Server server;
     private static JmDNS jmdns;
+
     public static void main(String[] args) {
 
         // 1,start the grpc, in 50051 port
@@ -144,15 +145,16 @@ public class HealthcareDailyService extends DailyHealthMonitoringServiceImplBase
             }
         };
     }
-        public static void disconnect() {
+
+    public static void disconnect() {
         if (jmdns != null) {
             jmdns.unregisterAllServices();
             try {
                 jmdns.close();
             } catch (IOException ex) {
-                Logger.getLogger(IVMonitoringService.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(HealthcareDailyService.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.println("✅ jmDNS closed");
+            System.out.println("----------------jmDNS closed------------------");
         }
         if (server != null) {
             server.shutdownNow();
