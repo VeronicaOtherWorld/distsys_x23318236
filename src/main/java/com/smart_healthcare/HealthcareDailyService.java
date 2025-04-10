@@ -76,7 +76,7 @@ public class HealthcareDailyService extends DailyHealthMonitoringServiceImplBase
     public void collectPatientData(CollectRequest request, StreamObserver<CollectResponse> responseObserver) {
 
         System.out.println("========receiving sending collect patient data request=======");
-        String res = "received";
+        String res = "received this information.";
         CollectResponse response = CollectResponse.newBuilder().setResult(res).build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();

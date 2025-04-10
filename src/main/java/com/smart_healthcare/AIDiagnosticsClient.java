@@ -31,7 +31,8 @@ public class AIDiagnosticsClient {
     // add blockingStub
     // for Unary RPC
     private static AIDiagnosticsServiceBlockingStub blockingStub;
-private static ManagedChannel channel;
+    private static ManagedChannel channel;
+
     public static void main(String[] args) throws InterruptedException {
 
         //1. find and connect to the discovery
@@ -170,7 +171,8 @@ private static ManagedChannel channel;
         blockingStub = AIDiagnosticsServiceGrpc.newBlockingStub(channel);
         System.out.println("--------connect to grpc--------- " + host + ":" + port);
     }
-       public static void disconnect() {
+
+    public static void disconnect() {
         if (channel != null) {
             channel.shutdownNow();
             System.out.println("****************IVMonitoringServiceGrpc channel shutdown***************");

@@ -36,6 +36,7 @@ grpc/generated/dailyhealthmonitoringservice/CollectResponse.class
 grpc/generated/dailyhealthmonitoringservice/PatientAlertRequest.class
 grpc/generated/vimonitoringservice/IVMonitoringServiceGrpc$IVMonitoringServiceImplBase.class
 grpc/generated/vimonitoringservice/IVStatusRequestOrBuilder.class
+com/smart_healthcare/GUI/HealthcareDailyGUI$13.class
 grpc/generated/aidiagnosticsservice/AIDiagnosticsServiceGrpc$3.class
 grpc/generated/aidiagnosticsservice/PatientDataRequest$Builder.class
 grpc/generated/aidiagnosticsservice/PatientDataRequest.class
@@ -51,6 +52,7 @@ grpc/generated/dailyhealthmonitoringservice/DailyHealthMonitoringServiceGrpc.cla
 com/smart_healthcare/GUI/HealthcareDailyGUI$3.class
 com/smart_healthcare/GUI/MainGUI$3.class
 grpc/generated/vimonitoringservice/IVStatusResponse$1.class
+com/smart_healthcare/GUI/HealthcareDailyGUI$14.class
 com/smart_healthcare/AIDiagnosticsClient$1.class
 grpc/generated/aidiagnosticsservice/AIResponseOrBuilder.class
 grpc/generated/vimonitoringservice/IVMonitoringServiceGrpc$IVMonitoringServiceBlockingStub.class
@@ -71,6 +73,7 @@ grpc/generated/aidiagnosticsservice/AIDiagnosticsResponse$1.class
 com/smart_healthcare/AIDiagnosticsService$2.class
 com/smart_healthcare/GUI/IVMonitoringGUI$3.class
 com/smart_healthcare/GUI/IVMonitoringGUI$12.class
+com/smart_healthcare/GUI/HealthcareDailyGUI$15.class
 grpc/generated/aidiagnosticsservice/DoctorRequest$Builder.class
 com/smart_healthcare/GUI/MainGUI$1.class
 com/smart_healthcare/GUI/AIDiagnosticsGUI$5.class
@@ -89,6 +92,7 @@ grpc/generated/vimonitoringservice/IVStatusResponse$Builder.class
 grpc/generated/vimonitoringservice/IVStatusResponse.class
 grpc/generated/aidiagnosticsservice/DoctorRequest$1.class
 grpc/generated/vimonitoringservice/RequestAllStatusOrBuilder.class
+com/smart_healthcare/GUI/HealthcareDailyGUI$12.class
 grpc/generated/vimonitoringservice/IVMonitoringServiceGrpc$MethodHandlers.class
 grpc/generated/vimonitoringservice/IVMonitoringServiceGrpc$IVMonitoringServiceBaseDescriptorSupplier.class
 com/smart_healthcare/GUI/IVMonitoringGUI$6.class
