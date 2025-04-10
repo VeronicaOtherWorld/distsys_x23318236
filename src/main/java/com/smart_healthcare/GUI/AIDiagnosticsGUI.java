@@ -2,6 +2,14 @@ package com.smart_healthcare.GUI;
 
 import com.smart_healthcare.AIDiagnosticsClient;
 import com.smart_healthcare.AIDiagnosticsService;
+import com.smart_healthcare.jmDNS.ServiceRegistration;
+import grpc.generated.aidiagnosticsservice.AIDiagnosticsResponse;
+import grpc.generated.aidiagnosticsservice.AIResponse;
+import grpc.generated.aidiagnosticsservice.DoctorRequest;
+import grpc.generated.aidiagnosticsservice.PatientDataRequest;
+import io.grpc.stub.StreamObserver;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -12,6 +20,9 @@ import com.smart_healthcare.AIDiagnosticsService;
  * @author luyi
  */
 public class AIDiagnosticsGUI extends javax.swing.JFrame {
+
+    private StreamObserver<PatientDataRequest> datasObserver;
+    private StreamObserver<DoctorRequest> doctorRequestObserver;
 
     /**
      * Creates new form AIDiagnosticsGUI
@@ -30,12 +41,12 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        backBtn = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        runBtn1 = new javax.swing.JButton();
+        runBtn2 = new javax.swing.JButton();
+        runBtn3 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jPanel2 = new javax.swing.JPanel();
@@ -44,47 +55,66 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        idField = new javax.swing.JTextField();
+        typeField = new javax.swing.JTextField();
+        descField = new javax.swing.JTextField();
+        sendBtn = new javax.swing.JButton();
+        finishBtn = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JSeparator();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        docIdField = new javax.swing.JTextField();
+        msgField = new javax.swing.JTextField();
+        bidisendBtn = new javax.swing.JButton();
+        quitBtn = new javax.swing.JButton();
         jSeparator5 = new javax.swing.JSeparator();
         jPanel4 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        resArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Palatino", 1, 24)); // NOI18N
         jLabel1.setText("AI Diagnostics Server");
 
-        jButton1.setBackground(new java.awt.Color(102, 255, 102));
-        jButton1.setText("back to main page");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        backBtn.setBackground(new java.awt.Color(102, 255, 102));
+        backBtn.setText("back to main page");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                backBtnActionPerformed(evt);
             }
         });
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 255));
 
-        jLabel12.setText("Before getting the IV status of one or all patitent(s), please click those 3 buttons at first.");
+        jLabel12.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 51));
+        jLabel12.setText("Before talking with AI, please click those 3 buttons at first.");
 
-        jButton4.setText("jButton4");
+        runBtn1.setText("run server");
+        runBtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                runBtn1ActionPerformed(evt);
+            }
+        });
 
-        jButton5.setText("jButton5");
+        runBtn2.setText("run client");
+        runBtn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                runBtn2ActionPerformed(evt);
+            }
+        });
 
-        jButton6.setText("jButton6");
+        runBtn3.setText("run registeration file");
+        runBtn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                runBtn3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -97,12 +127,12 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
                         .addComponent(jLabel12))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(91, 91, 91)
-                        .addComponent(jButton4)
+                        .addComponent(runBtn1)
                         .addGap(75, 75, 75)
-                        .addComponent(jButton5)
+                        .addComponent(runBtn2)
                         .addGap(82, 82, 82)
-                        .addComponent(jButton6)))
-                .addContainerGap(68, Short.MAX_VALUE))
+                        .addComponent(runBtn3)))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -111,9 +141,9 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
                 .addComponent(jLabel12)
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5)
-                    .addComponent(jButton6))
+                    .addComponent(runBtn1)
+                    .addComponent(runBtn2)
+                    .addComponent(runBtn3))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
 
@@ -129,10 +159,23 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
 
         jLabel8.setText("discription");
 
-        jButton2.setText("send");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        idField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                idFieldActionPerformed(evt);
+            }
+        });
+
+        sendBtn.setText("send");
+        sendBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendBtnActionPerformed(evt);
+            }
+        });
+
+        finishBtn.setText("finish");
+        finishBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                finishBtnActionPerformed(evt);
             }
         });
 
@@ -152,32 +195,40 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
                     .addComponent(jLabel8))
                 .addGap(31, 31, 31)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1)
-                    .addComponent(jTextField2)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
-                .addGap(36, 36, 36)
-                .addComponent(jButton2)
+                    .addComponent(idField)
+                    .addComponent(typeField)
+                    .addComponent(descField, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
+                .addGap(49, 49, 49)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(sendBtn)
+                    .addComponent(finishBtn))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel7)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel8))
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel7)
+                            .addComponent(typeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel8))
+                            .addComponent(descField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(sendBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(finishBtn)))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -191,16 +242,23 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
 
         jLabel10.setText("message");
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        docIdField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                docIdFieldActionPerformed(evt);
             }
         });
 
-        jButton3.setText("send");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        bidisendBtn.setText("send");
+        bidisendBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                bidisendBtnActionPerformed(evt);
+            }
+        });
+
+        quitBtn.setText("quit");
+        quitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quitBtnActionPerformed(evt);
             }
         });
 
@@ -221,10 +279,12 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
                         .addComponent(jLabel9)))
                 .addGap(31, 31, 31)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField4)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
-                .addGap(44, 44, 44)
-                .addComponent(jButton3)
+                    .addComponent(docIdField, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                    .addComponent(msgField))
+                .addGap(46, 46, 46)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bidisendBtn)
+                    .addComponent(quitBtn))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -232,29 +292,37 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
+                        .addGap(44, 44, 44)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(bidisendBtn)
+                            .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(quitBtn)
+                        .addGap(0, 24, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(jLabel9)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jButton3)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel10)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(26, Short.MAX_VALUE))
+                            .addComponent(docIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel5)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(msgField)))))
+                .addContainerGap())
         );
 
         jPanel4.setBackground(new java.awt.Color(153, 153, 255));
 
         jLabel11.setText("result");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        resArea.setColumns(20);
+        resArea.setRows(5);
+        jScrollPane1.setViewportView(resArea);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -270,14 +338,13 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(jLabel11)))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(67, 67, 67)
+                .addComponent(jLabel11)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -288,7 +355,7 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addComponent(jLabel1)
                 .addGap(59, 59, 59)
-                .addComponent(jButton1)
+                .addComponent(backBtn)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jSeparator2)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -305,7 +372,7 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jButton1))
+                    .addComponent(backBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
@@ -321,26 +388,132 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(24, 24, 24))
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void sendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        //first server send a group of info to server
+        // not finish until click the finish button
+        String id = idField.getText().trim();
+        String type = typeField.getText().trim();
+        String desc = descField.getText().trim();
+        if (id.isEmpty() || type.isEmpty() || desc.isEmpty()) {
+            resArea.setText("Please fill the field at first\n");
+            return;
+        }
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // init the observer to observer the repsone
+        if (datasObserver == null) {
+            datasObserver = AIDiagnosticsClient.asyncStub
+                    .streamPatientData(new StreamObserver<AIDiagnosticsResponse>() {
+                        @Override
+                        public void onNext(AIDiagnosticsResponse v) {
+                  resArea.setText("\n---------server response is: \n");
+                            resArea.append(
+                                     "patient id: " + v.getPatientId() + "\n"
+                                    + "diagnosis is: " + v.getDiagnosis() + "\n"
+                                    + "recommendation: " + v.getRecommendation() + "\n"
+                                    + "-----------");
+                            // reset the field
+                            idField.setText("");
+                            typeField.setText("");
+                            descField.setText("");
+                        }
+
+                        @Override
+                        public void onError(Throwable thrwbl) {
+                            System.out.println(thrwbl + "   thrwblthrwblthrwblthrwblthrwblthrwblthrwbl");
+                        }
+
+                        @Override
+                        public void onCompleted() {
+                            System.out.println("------------------------completed---------------------");
+                            // finish clean the observer
+                            datasObserver = null;
+                        }
+                    });
+        }
+        // create request 
+        PatientDataRequest request = PatientDataRequest.newBuilder()
+                .setPatientId(id)
+                .setDataType(type)
+                .setValue(desc)
+                .build();
+
+        // send
+        datasObserver.onNext(request);
+        resArea.append("----------Sent to AI: \n"
+                + "patient id: " + id + "\n"
+                + "data type(doc or pic etc.): " + type + "\n"
+                + "descrption: " + desc + "\n");
+        // reset the field
+        idField.setText("");
+        typeField.setText("");
+        descField.setText("");
+    }//GEN-LAST:event_sendBtnActionPerformed
+
+    private void docIdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_docIdFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_docIdFieldActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void bidisendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bidisendBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // bi-di streaming
+        String id = docIdField.getText().trim();
+        String message = msgField.getText().trim();
+        // in case the field is empty
+        if (id.isEmpty() || message.isEmpty()) {
+            resArea.setText("Please fill the field at first\n");
+            return;
+        }
+
+        if (doctorRequestObserver == null) {
+            doctorRequestObserver = AIDiagnosticsClient.asyncStub
+                    .streamAIDiagnosis(new StreamObserver<AIResponse>() {
+                        @Override
+                        public void onNext(AIResponse v) {
+                            resArea.append("\n[AI] : " + v.getAnswer() + "\n"
+                                    + "-----------");
+                            // reset the field
+                            docIdField.setText("");
+                            msgField.setText("");
+                        }
+
+                        @Override
+                        public void onError(Throwable thrwbl) {
+                            System.out.println(thrwbl + "   thrwblthrwblthrwblthrwblthrwblthrwblthrwbl");
+
+                        }
+
+                        @Override
+                        public void onCompleted() {
+                            System.out.println("------------------------completed---------------------");
+                            // finish clean the observer
+                            doctorRequestObserver = null;
+                        }
+                    });
+        }
+        // create request 
+        DoctorRequest request = DoctorRequest.newBuilder()
+                .setDoctorId(id)
+                .setMessage(message)
+                .build();
+        doctorRequestObserver.onNext(request);
+
+        resArea.append("\n[You]: " + message + "\n-----------");
+        // reset the field
+        docIdField.setText("");
+        msgField.setText("");
+
+
+    }//GEN-LAST:event_bidisendBtnActionPerformed
+
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
         AIDiagnosticsClient.disconnect();
         AIDiagnosticsService.disconnect();
@@ -350,7 +523,76 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
 
         // hidden the VI page
         this.setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_backBtnActionPerformed
+
+    private void idFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idFieldActionPerformed
+
+    private void finishBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finishBtnActionPerformed
+        // TODO add your handling code here:
+
+        // finish button logic
+        if (datasObserver != null) {
+            datasObserver.onCompleted();
+            resArea.append("----------\nfinish sending patient info to AI\n---------");
+        }
+    }//GEN-LAST:event_finishBtnActionPerformed
+
+    private void runBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runBtn1ActionPerformed
+        // TODO add your handling code here:
+
+        // run server
+        Thread serverThread = new Thread(new Runnable() {
+            public void run() {
+                AIDiagnosticsService.main(new String[]{});
+            }
+        });
+        serverThread.start();
+    }//GEN-LAST:event_runBtn1ActionPerformed
+
+    private void runBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runBtn2ActionPerformed
+        // TODO add your handling code here:
+        // run client
+
+        Thread serverThread = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    AIDiagnosticsClient.main(new String[]{});
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(AIDiagnosticsGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        serverThread.start();
+    }//GEN-LAST:event_runBtn2ActionPerformed
+
+    private void runBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runBtn3ActionPerformed
+        // TODO add your handling code here:
+        // regsiter
+
+        Thread serverThread = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    ServiceRegistration.main(new String[]{});
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(HealthcareDailyGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        serverThread.start();
+    }//GEN-LAST:event_runBtn3ActionPerformed
+
+    private void quitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitBtnActionPerformed
+        // TODO add your handling code here:
+        
+        // quit
+                // finish button
+        if (doctorRequestObserver != null) {
+            doctorRequestObserver.onCompleted();
+            resArea.append("\n▶The conversation finished.◀\n");
+        }
+    }//GEN-LAST:event_quitBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -388,12 +630,12 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton backBtn;
+    private javax.swing.JButton bidisendBtn;
+    private javax.swing.JTextField descField;
+    private javax.swing.JTextField docIdField;
+    private javax.swing.JButton finishBtn;
+    private javax.swing.JTextField idField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -415,11 +657,13 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField msgField;
+    private javax.swing.JButton quitBtn;
+    private javax.swing.JTextArea resArea;
+    private javax.swing.JButton runBtn1;
+    private javax.swing.JButton runBtn2;
+    private javax.swing.JButton runBtn3;
+    private javax.swing.JButton sendBtn;
+    private javax.swing.JTextField typeField;
     // End of variables declaration//GEN-END:variables
 }

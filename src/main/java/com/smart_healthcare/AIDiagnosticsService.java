@@ -79,8 +79,8 @@ public class AIDiagnosticsService extends AIDiagnosticsServiceImplBase {
             public void onNext(PatientDataRequest v) {
                 // received the materials that client send one by one
                 System.out.println("----receive message, the id is " + v.getPatientId()
-                        + ", the data type is " + v.getDataType()
-                        + ", the value is " + v.getValue());
+                        + "\n, the data type is " + v.getDataType()
+                        + "\n, the value is " + v.getValue());
                 requestList.add(v);
             }
 
@@ -96,9 +96,9 @@ public class AIDiagnosticsService extends AIDiagnosticsServiceImplBase {
                 // set the response to client
                 // tell them what is the giagnosis result and give recommend therapies
                 AIDiagnosticsResponse response = AIDiagnosticsResponse.newBuilder()
-                        .setPatientId("800")
+                        .setPatientId("1")
                         .setDiagnosis("heart disease")
-                        .setRecommendation("Depends on those materials that received, the condition is very serious and may require emergency surgery.")
+                        .setRecommendation("Depends on those materials that received, \nthe condition is very serious \nand may require emergency surgery.")
                         .build();
 
                 // call next method only once
@@ -130,10 +130,15 @@ public class AIDiagnosticsService extends AIDiagnosticsServiceImplBase {
             public void onNext(DoctorRequest v) {
                 String doctorMsg = v.getMessage();
                 // simuate the response
-                String reply = "======= AI's advice: pay attention to " + doctorMsg + "=======";
+                String reply = "AI's advice: pay attention to " + doctorMsg + ".";
                 System.out.println("doctor request send message "
                         + " id: " + v.getDoctorId()
                         + " message: " + v.getMessage());
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(AIDiagnosticsService.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 AIResponse response = AIResponse.newBuilder()
                         .setDoctorId("17")
                         .setAnswer(reply)

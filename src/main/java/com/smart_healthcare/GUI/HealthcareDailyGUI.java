@@ -123,7 +123,7 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
         jLabel2.setBackground(new java.awt.Color(255, 255, 204));
         jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel2.setText("Before getting the IV status of one or all patitent(s), please click those 3 buttons at first.");
+        jLabel2.setText("Before monitoring one or all patitent(s), please click those 3 buttons at first.");
 
         runServerBtn.setText("run server");
         runServerBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -387,7 +387,7 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(14, 14, 14)
                                 .addComponent(finishBtn)))))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jPanel6.setBackground(new java.awt.Color(255, 204, 204));
@@ -406,7 +406,7 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
                 .addGap(56, 56, 56)
                 .addComponent(jLabel17)
                 .addGap(47, 47, 47)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
@@ -414,7 +414,7 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(63, 63, 63)
                         .addComponent(jLabel17)
@@ -445,12 +445,15 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 793, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(jSeparator4)
-            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 793, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -471,11 +474,11 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -521,9 +524,11 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
 
     private void finishBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finishBtnActionPerformed
         // TODO add your handling code here:
+        
+        // finish button
         if (alertRequestObserver != null) {
             alertRequestObserver.onCompleted();
-            resultArea.append("Finished sending all alerts.");
+            resultArea.append("Finished sending all alerts.\n");
         }
 
     }//GEN-LAST:event_finishBtnActionPerformed
@@ -558,6 +563,8 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
 
     private void runRegisterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runRegisterBtnActionPerformed
         // TODO add your handling code here:
+        
+        //register
         Thread serverThread = new Thread(new Runnable() {
             public void run() {
                 try {
@@ -589,7 +596,7 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
         String description = descField.getText().trim();
 
         if (patientId.isEmpty() || patientName.isEmpty() || description.isEmpty()) {
-            resultArea.setText("Please fill the field at first");
+            resultArea.setText("Please fill the field at first\n");
             return;
         }
         //init the observer to observer the response
@@ -599,7 +606,8 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
                     .reportAbnormalPatients(new StreamObserver<ReportStatusResponse>() {
                         @Override
                         public void onNext(ReportStatusResponse v) {
-                            resultArea.append("---------server response is: " + v.getMessage() + "-----------");
+                            resultArea.setText("server response is: \n");
+                            resultArea.append(v.getMessage() + "-----------");
                             // reset the field
                             patientIdField2.setText("");
                             patientNameField.setText("");
@@ -629,7 +637,7 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
                 .build();
 
         alertRequestObserver.onNext(request);
-
+        
         resultArea.append("----------Sent alert for patient: \n"
                 + "patient id: " + patientId + "\n"
                 + "patient name: " + patientName + "\n"
@@ -644,11 +652,19 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
     private void resetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtnActionPerformed
         // TODO add your handling code here:
 
+        patientIdField.setText("");
+        rateField.setText("");
+        pulseField.setText("");
+        tempField.setText("");
     }//GEN-LAST:event_resetBtnActionPerformed
 
     private void resetBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtn1ActionPerformed
         // TODO add your handling code here:
-        resultArea.setText("");
+        patientIdField2.setText("");
+        patientNameField.setText("");
+        descField.setText("");
+
+
     }//GEN-LAST:event_resetBtn1ActionPerformed
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {

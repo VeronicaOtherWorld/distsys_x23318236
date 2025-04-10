@@ -27,7 +27,7 @@ import java.util.Scanner;
 public class AIDiagnosticsClient {
 
     // a non-blocking stub to make an asynchronous call
-    private static AIDiagnosticsServiceStub asyncStub;
+    public static AIDiagnosticsServiceStub asyncStub;
     // add blockingStub
     // for Unary RPC
     private static AIDiagnosticsServiceBlockingStub blockingStub;
