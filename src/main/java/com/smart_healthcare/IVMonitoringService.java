@@ -40,6 +40,7 @@ public class IVMonitoringService extends IVMonitoringServiceImplBase {
         try {
             server = ServerBuilder.forPort(port)
                     .addService(ivmonitorrserver)
+                    .intercept(new AuthorizationServerInterceptor())
                     .build()
                     .start();
             logger.info("Server started, listening on " + port);

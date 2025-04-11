@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
 import com.smart_healthcare.jmDNS.ServiceDiscovery;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 /**
  *
@@ -170,13 +172,20 @@ public class HealthcareDailyClient {
     // 在 HealthcareDailyClient.java 中封装一个连接用的方法：
 
     public static void connectToServer(String host, int port) {
+        if (channel != null && !channel.isShutdown()) {
+            channel.shutdownNow();
+        }
+        
         channel = ManagedChannelBuilder
                 .forAddress(host, port)
                 .usePlaintext()
                 .build();
+        // create token
+        String jwt = getJwt();
+        BearerToken token = new BearerToken(jwt);
 
-        asyncStub = DailyHealthMonitoringServiceGrpc.newStub(channel);
-        blockingStub = DailyHealthMonitoringServiceGrpc.newBlockingStub(channel); // connect
+        asyncStub = DailyHealthMonitoringServiceGrpc.newStub(channel).withCallCredentials(token);
+        blockingStub = DailyHealthMonitoringServiceGrpc.newBlockingStub(channel).withCallCredentials(token); // connect
         System.out.println("--------connect to grpc--------- " + host + ":" + port);
     }
 
@@ -185,5 +194,12 @@ public class HealthcareDailyClient {
             channel.shutdownNow();
             System.out.println("****************IVMonitoringServiceGrpc channel shutdown***************");
         }
+    }
+
+    private static String getJwt() {
+        return Jwts.builder()
+                .setSubject("AIDiagnosticsClient") // client's identifier
+                .signWith(SignatureAlgorithm.HS256, Constants.JWT_SIGNING_KEY)
+                .compact();
     }
 }

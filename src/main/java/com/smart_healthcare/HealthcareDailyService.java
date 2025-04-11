@@ -45,6 +45,7 @@ public class HealthcareDailyService extends DailyHealthMonitoringServiceImplBase
         try {
             server = ServerBuilder.forPort(port)
                     .addService(dailyserver)
+                    .intercept(new AuthorizationServerInterceptor())
                     .build()
                     .start();
             logger.info("Server started, listening on " + port);

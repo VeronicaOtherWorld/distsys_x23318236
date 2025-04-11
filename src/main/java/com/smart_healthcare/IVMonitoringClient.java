@@ -18,6 +18,8 @@ import grpc.generated.vimonitoringservice.RequestAllStatus;
 import grpc.generated.vimonitoringservice.IVMonitoringServiceGrpc;
 
 import grpc.generated.vimonitoringservice.IVMonitoringServiceGrpc.IVMonitoringServiceBlockingStub;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Iterator;
 
 /**
@@ -74,19 +76,25 @@ public class IVMonitoringClient {
     }
 
     public static void connectToServer(String host, int port) {
+        if (channel != null && !channel.isShutdown()) {
+            channel.shutdownNow();
+        }        
         channel = ManagedChannelBuilder
                 .forAddress(host, port)
                 .usePlaintext()
                 .build();
-
+        
+        String jwt = getJwt();
+        BearerToken token = new BearerToken(jwt);
+        
         //non-blocking stub is for asynchronous calls
         //client does not wait for server to complete before starting to read responses
         //must use non-blocking stub for client streaming and bidirectional streaming
         //can also use for Server Streaming asynchronously 
-        asyncStub = IVMonitoringServiceGrpc.newStub(channel);
+        asyncStub = IVMonitoringServiceGrpc.newStub(channel).withCallCredentials(token);
 
         //        requestAverageTemperature();
-        blockingStub = IVMonitoringServiceGrpc.newBlockingStub(channel);
+        blockingStub = IVMonitoringServiceGrpc.newBlockingStub(channel).withCallCredentials(token);
         System.out.println("--------connect to grpc--------- " + host + ":" + port);
     }
 
@@ -95,5 +103,12 @@ public class IVMonitoringClient {
             channel.shutdownNow();
             System.out.println("****************IVMonitoringServiceGrpc channel shutdown***************");
         }
+    }
+
+    private static String getJwt() {
+        return Jwts.builder()
+                .setSubject("AIDiagnosticsClient") // client's identifier
+                .signWith(SignatureAlgorithm.HS256, Constants.JWT_SIGNING_KEY)
+                .compact();
     }
 }

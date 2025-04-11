@@ -36,9 +36,11 @@ public class AIDiagnosticsService extends AIDiagnosticsServiceImplBase {
 
         int port = 50051;
 
+        // add authentication
         try {
             server = ServerBuilder.forPort(port)
                     .addService(aiserver)
+                    .intercept(new AuthorizationServerInterceptor())
                     .build()
                     .start();
             logger.info("Server started, listening on " + port);

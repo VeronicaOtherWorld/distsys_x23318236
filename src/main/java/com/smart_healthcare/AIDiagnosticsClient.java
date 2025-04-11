@@ -17,6 +17,8 @@ import grpc.generated.aidiagnosticsservice.AIResponse;
 
 import grpc.generated.aidiagnosticsservice.AIDiagnosticsServiceGrpc;
 import grpc.generated.aidiagnosticsservice.AIDiagnosticsServiceGrpc.*;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -156,19 +158,26 @@ public class AIDiagnosticsClient {
     }
 
     public static void connectToServer(String host, int port) {
-        ManagedChannel channel = ManagedChannelBuilder
+        if (channel != null && !channel.isShutdown()) {
+            channel.shutdownNow();
+        }
+        
+        channel = ManagedChannelBuilder
                 .forAddress(host, port)
                 .usePlaintext()
                 .build();
+
+        String jwt = getJwt();
+        BearerToken token = new BearerToken(jwt);
 
         //non-blocking stub is for asynchronous calls
         //client does not wait for server to complete before starting to read responses
         //must use non-blocking stub for client streaming and bidirectional streaming
         //can also use for Server Streaming asynchronously
-        asyncStub = AIDiagnosticsServiceGrpc.newStub(channel);
+        asyncStub = AIDiagnosticsServiceGrpc.newStub(channel).withCallCredentials(token);
 
 //        requestAverageTemperature();
-        blockingStub = AIDiagnosticsServiceGrpc.newBlockingStub(channel);
+        blockingStub = AIDiagnosticsServiceGrpc.newBlockingStub(channel).withCallCredentials(token);
         System.out.println("--------connect to grpc--------- " + host + ":" + port);
     }
 
@@ -177,5 +186,12 @@ public class AIDiagnosticsClient {
             channel.shutdownNow();
             System.out.println("****************IVMonitoringServiceGrpc channel shutdown***************");
         }
+    }
+
+    private static String getJwt() {
+        return Jwts.builder()
+                .setSubject("AIDiagnosticsClient") // client's identifier
+                .signWith(SignatureAlgorithm.HS256, Constants.JWT_SIGNING_KEY)
+                .compact();
     }
 }
