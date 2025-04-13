@@ -66,16 +66,17 @@ public class IVMonitoringClient {
             IVStatusResponse response = blockingStub.getIVStatus(request);
             int status = response.getStatus();
             String res = convertStatus(status);
-            msg = "Patient name: " + response.getPatientName()
+            msg = "\nPatient name: " + response.getPatientName()
                     + "\nRemaining is : " + response.getRemaining() + "ml"
-                    + "\nStatus: " + res;
+                    + "\nStatus: " + res + "\n";
             System.out.println("-------request result is : " + response.getPatientId()
                     + " name: " + response.getPatientName()
                     + " remaning: " + response.getRemaining()
                     + " status: " + response.getStatus());
         } catch (StatusRuntimeException e) {
             logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
-            msg = "RPC failed: {0}";
+            msg = "Something wrong happened: " 
+                    + e.getStatus().getDescription();
         }
         return msg;
 
@@ -97,9 +98,11 @@ public class IVMonitoringClient {
                 int status = response.getStatus();
                 String strStatus = convertStatus(status);
 
-                sb.append("Patient name: " + response.getPatientName()
-                        + "\nRemaining is : " + response.getRemaining() + "ml"
-                        + "\nStatus: " + strStatus);
+                sb.append("\n----------------\nPatient name: ")
+                        .append(response.getPatientName())
+                        .append("\nRemaining is : ")
+                        .append(response.getRemaining())
+                        .append("ml\nStatus: ").append(strStatus);
 
                 System.out.println("----receive message, the id is " + response.getPatientId()
                         + ", the name is " + response.getPatientName()

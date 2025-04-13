@@ -82,13 +82,13 @@ public class IVMonitoringService extends IVMonitoringServiceImplBase {
         // mock different cases
         if (id.equals("1")) {
             response
-                    .setPatientId("1")
+                    .setPatientId(id)
                     .setPatientName("Alice")
                     .setRemaining(50.5)
                     .setStatus(0);
         } else if (id.equals("2")) {
             response
-                    .setPatientId("200")
+                    .setPatientId(id)
                     .setPatientName("Bob")
                     .setRemaining(30.2)
                     .setStatus(1);
