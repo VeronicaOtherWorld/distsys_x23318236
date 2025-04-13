@@ -121,15 +121,10 @@ public class IVMonitoringService extends IVMonitoringServiceImplBase {
         System.out.println("======================streamAllIVStatus starting======================");
         // this method should get all patients' VI status return back and display
 
-        Context ctx = Context.current();
 
         // simulate return a group of data
         String[] names = {"Liam", "Ava", "Oliver", "Peter", "James"};
         for (int i = 0; i < 5; i++) {
-            if (ctx.isCancelled()) {
-                System.out.println("❌❌❌ Client cancelled the stream.");
-                return;
-            }
             double num = 1 + new Random().nextDouble() * (100 - 1);
             double newNum = Math.round(num * 10.0) / 10.0;
             // random number 0-2

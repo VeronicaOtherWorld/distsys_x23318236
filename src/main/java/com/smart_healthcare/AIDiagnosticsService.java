@@ -133,7 +133,7 @@ public class AIDiagnosticsService extends AIDiagnosticsServiceImplBase {
                 String doctorMsg = v.getMessage();
                 // simuate the response
                 String reply = "Doctor id: " + v.getDoctorId() + 
-                        "AI's advice: pay attention to " + doctorMsg + ".";
+                        "\nAI's advice: pay attention to " + doctorMsg + ".";
                 System.out.println("doctor request send message "
                         + " id: " + v.getDoctorId()
                         + " message: " + v.getMessage());

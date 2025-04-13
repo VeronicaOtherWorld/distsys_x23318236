@@ -21,6 +21,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -176,10 +177,17 @@ public class AIDiagnosticsClient {
         //client does not wait for server to complete before starting to read responses
         //must use non-blocking stub for client streaming and bidirectional streaming
         //can also use for Server Streaming asynchronously
-        asyncStub = AIDiagnosticsServiceGrpc.newStub(channel).withCallCredentials(token);
+        asyncStub = AIDiagnosticsServiceGrpc.newStub(channel)
+                .withCallCredentials(token)
+                .withDeadlineAfter(30, TimeUnit.SECONDS);
 
 //        requestAverageTemperature();
-        blockingStub = AIDiagnosticsServiceGrpc.newBlockingStub(channel).withCallCredentials(token);
+
+        // in case the not responsed stub block the progress, add timeout
+        // if does not response after 30 sec, automatically finish
+        blockingStub = AIDiagnosticsServiceGrpc.newBlockingStub(channel)
+                .withCallCredentials(token)
+                .withDeadlineAfter(30, TimeUnit.SECONDS);
         System.out.println("--------connect to grpc--------- " + host + ":" + port);
     }
 

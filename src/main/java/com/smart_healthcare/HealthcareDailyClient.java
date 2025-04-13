@@ -27,6 +27,7 @@ import java.util.concurrent.CountDownLatch;
 import com.smart_healthcare.jmDNS.ServiceDiscovery;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -167,8 +168,12 @@ public class HealthcareDailyClient {
         String jwt = getJwt();
         BearerToken token = new BearerToken(jwt);
 
-        asyncStub = DailyHealthMonitoringServiceGrpc.newStub(channel).withCallCredentials(token);
-        blockingStub = DailyHealthMonitoringServiceGrpc.newBlockingStub(channel).withCallCredentials(token); // connect
+        asyncStub = DailyHealthMonitoringServiceGrpc.newStub(channel)
+                .withCallCredentials(token)
+                .withDeadlineAfter(30, TimeUnit.SECONDS);
+        blockingStub = DailyHealthMonitoringServiceGrpc.newBlockingStub(channel)
+                .withCallCredentials(token)
+                .withDeadlineAfter(30, TimeUnit.SECONDS); // connect
         System.out.println("--------connect to grpc--------- " + host + ":" + port);
     }
 

@@ -155,7 +155,9 @@ public class IVMonitoringClient {
                 .withDeadlineAfter(30, TimeUnit.SECONDS);
 
         //        requestAverageTemperature();
-        blockingStub = IVMonitoringServiceGrpc.newBlockingStub(channel).withCallCredentials(token);
+        blockingStub = IVMonitoringServiceGrpc.newBlockingStub(channel)
+                .withCallCredentials(token)
+                .withDeadlineAfter(30, TimeUnit.SECONDS);
         System.out.println("--------connect to grpc--------- " + host + ":" + port);
     }
 
