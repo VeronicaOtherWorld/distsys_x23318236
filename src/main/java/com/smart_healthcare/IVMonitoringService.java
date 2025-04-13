@@ -15,6 +15,8 @@ import io.grpc.stub.StreamObserver;
 import grpc.generated.vimonitoringservice.IVMonitoringServiceImpl;
 import grpc.generated.vimonitoringservice.*;
 import grpc.generated.vimonitoringservice.IVMonitoringServiceGrpc.IVMonitoringServiceImplBase;
+import io.grpc.Context;
+import io.grpc.Status;
 import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
 import java.util.ArrayList;
 import java.util.Random;
@@ -97,11 +99,12 @@ public class IVMonitoringService extends IVMonitoringServiceImplBase {
                     .setRemaining(3)
                     .setStatus(2);
         } else {
-            response
-                    .setPatientId(id)
-                    .setPatientName("not exist")
-                    .setRemaining(0.0)
-                    .setStatus(3);
+            // if user enter an unknown id, show error message
+            responseObserver.onError(
+                    Status.NOT_FOUND
+                            .withDescription("Patient ID " + id + " not found.")
+                            .asRuntimeException()
+            );
         }
 
         responseObserver.onNext(response.build());
@@ -118,9 +121,15 @@ public class IVMonitoringService extends IVMonitoringServiceImplBase {
         System.out.println("======================streamAllIVStatus starting======================");
         // this method should get all patients' VI status return back and display
 
+        Context ctx = Context.current();
+
         // simulate return a group of data
         String[] names = {"Liam", "Ava", "Oliver", "Peter", "James"};
         for (int i = 0; i < 5; i++) {
+            if (ctx.isCancelled()) {
+                System.out.println("❌❌❌ Client cancelled the stream.");
+                return;
+            }
             double num = 1 + new Random().nextDouble() * (100 - 1);
             double newNum = Math.round(num * 10.0) / 10.0;
             // random number 0-2
@@ -132,7 +141,7 @@ public class IVMonitoringService extends IVMonitoringServiceImplBase {
                     .setStatus(statusNum)
                     .build();
             try {
-                Thread.sleep(500);
+                Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(IVMonitoringService.class.getName()).log(Level.SEVERE, null, ex);
             }

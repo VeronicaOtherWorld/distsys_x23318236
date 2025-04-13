@@ -132,7 +132,8 @@ public class AIDiagnosticsService extends AIDiagnosticsServiceImplBase {
             public void onNext(DoctorRequest v) {
                 String doctorMsg = v.getMessage();
                 // simuate the response
-                String reply = "AI's advice: pay attention to " + doctorMsg + ".";
+                String reply = "Doctor id: " + v.getDoctorId() + 
+                        "AI's advice: pay attention to " + doctorMsg + ".";
                 System.out.println("doctor request send message "
                         + " id: " + v.getDoctorId()
                         + " message: " + v.getMessage());
@@ -141,8 +142,9 @@ public class AIDiagnosticsService extends AIDiagnosticsServiceImplBase {
                 } catch (InterruptedException ex) {
                     Logger.getLogger(AIDiagnosticsService.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
                 AIResponse response = AIResponse.newBuilder()
-                        .setDoctorId("17")
+                        .setDoctorId(v.getDoctorId())
                         .setAnswer(reply)
                         .build();
                 responseObserver.onNext(response);

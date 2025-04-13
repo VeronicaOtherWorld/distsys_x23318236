@@ -78,7 +78,6 @@ com/smart_healthcare/GUI/IVMonitoringGUI$4.class
 grpc/generated/aidiagnosticsservice/AIDiagnosticsResponse$1.class
 com/smart_healthcare/AIDiagnosticsService$2.class
 com/smart_healthcare/GUI/IVMonitoringGUI$3.class
-com/smart_healthcare/GUI/IVMonitoringGUI$12.class
 com/smart_healthcare/GUI/HealthcareDailyGUI$15.class
 grpc/generated/aidiagnosticsservice/DoctorRequest$Builder.class
 com/smart_healthcare/GUI/MainGUI$1.class

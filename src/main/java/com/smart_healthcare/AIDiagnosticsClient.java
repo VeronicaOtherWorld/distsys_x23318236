@@ -46,11 +46,12 @@ public class AIDiagnosticsClient {
     }
 
     // 1. steaming sending patients' information to server
-    public static void requestPatientInfo() {
+    public static StreamObserver<PatientDataRequest> requestPatientInfo(
+            StreamObserver<AIDiagnosticsResponse> responseObserver) {
         System.out.println("--------Client Streaming - send info to server ------");
 
         //obseration teh result
-        StreamObserver<AIDiagnosticsResponse> responseObserver = new StreamObserver<AIDiagnosticsResponse>() {
+        responseObserver = new StreamObserver<AIDiagnosticsResponse>() {
             @Override
             public void onNext(AIDiagnosticsResponse v) {
                 // get the response
@@ -72,42 +73,43 @@ public class AIDiagnosticsClient {
         };
 
         // start sending the result
-        StreamObserver<PatientDataRequest> requestObserver = asyncStub.streamPatientData(responseObserver);
-        try {
-            requestObserver.onNext(PatientDataRequest.newBuilder()
-                    .setPatientId("800")
-                    .setDataType("Medical history")
-                    .setValue("There are heart disease patients in the family.")
-                    .build());
-
-            Thread.sleep(500);
-
-            requestObserver.onNext(PatientDataRequest.newBuilder()
-                    .setPatientId("800")
-                    .setDataType("Physical examination")
-                    .setValue("Abnormal heartbeat, a murmur in the heart.")
-                    .build());
-
-            Thread.sleep(500);
-
-            requestObserver.onNext(PatientDataRequest.newBuilder()
-                    .setPatientId("800")
-                    .setDataType("Lab tests")
-                    .setValue("The levels of serum cardiac enzymes were increased significantly.")
-                    .build());
-
-            Thread.sleep(500);
-
-            // after finishing, tell server all done
-            requestObserver.onCompleted();
-
-            // give enough time to send request
-            Thread.sleep(1000);
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        StreamObserver<PatientDataRequest> requestObserver = asyncStub.streamPatientData(responseObserver);
+//        try {
+//            requestObserver.onNext(PatientDataRequest.newBuilder()
+//                    .setPatientId("800")
+//                    .setDataType("Medical history")
+//                    .setValue("There are heart disease patients in the family.")
+//                    .build());
+//
+//            Thread.sleep(500);
+//
+//            requestObserver.onNext(PatientDataRequest.newBuilder()
+//                    .setPatientId("800")
+//                    .setDataType("Physical examination")
+//                    .setValue("Abnormal heartbeat, a murmur in the heart.")
+//                    .build());
+//
+//            Thread.sleep(500);
+//
+//            requestObserver.onNext(PatientDataRequest.newBuilder()
+//                    .setPatientId("800")
+//                    .setDataType("Lab tests")
+//                    .setValue("The levels of serum cardiac enzymes were increased significantly.")
+//                    .build());
+//
+//            Thread.sleep(500);
+//
+//            // after finishing, tell server all done
+//            requestObserver.onCompleted();
+//
+//            // give enough time to send request
+//            Thread.sleep(1000);
+//        } catch (RuntimeException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        return asyncStub.streamPatientData(responseObserver);
     }
 
     // 2. bi-di streaming doctor commutiate with ai

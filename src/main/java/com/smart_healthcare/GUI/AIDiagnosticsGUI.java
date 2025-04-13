@@ -408,8 +408,7 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
 
         // init the observer to observer the repsone
         if (datasObserver == null) {
-            datasObserver = AIDiagnosticsClient.asyncStub
-                    .streamPatientData(new StreamObserver<AIDiagnosticsResponse>() {
+            datasObserver = AIDiagnosticsClient.requestPatientInfo(new StreamObserver<AIDiagnosticsResponse>() {
                         @Override
                         public void onNext(AIDiagnosticsResponse v) {
                   resArea.setText("\n---------server response is: \n");

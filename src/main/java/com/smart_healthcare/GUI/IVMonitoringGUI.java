@@ -11,6 +11,7 @@ import com.smart_healthcare.jmDNS.ServiceRegistration;
 import grpc.generated.vimonitoringservice.IVStatusRequest;
 import grpc.generated.vimonitoringservice.IVStatusResponse;
 import grpc.generated.vimonitoringservice.RequestAllStatus;
+import io.grpc.Context.CancellableContext;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +22,7 @@ import javax.swing.JOptionPane;
  * @author luyi
  */
 public class IVMonitoringGUI extends javax.swing.JFrame {
-
+public static CancellableContext withCancellation;
     /**
      * Creates new form IVMonitoring
      */
@@ -45,7 +46,6 @@ public class IVMonitoringGUI extends javax.swing.JFrame {
         jFrame1 = new javax.swing.JFrame();
         jSeparator4 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -76,6 +76,7 @@ public class IVMonitoringGUI extends javax.swing.JFrame {
         runRegister = new javax.swing.JButton();
         jSeparator7 = new javax.swing.JSeparator();
         backBtn = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -220,7 +221,7 @@ public class IVMonitoringGUI extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -232,7 +233,7 @@ public class IVMonitoringGUI extends javax.swing.JFrame {
                         .addGap(36, 36, 36)
                         .addComponent(allPatientBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel8))
-                .addContainerGap(409, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -339,7 +340,7 @@ public class IVMonitoringGUI extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(jLabel9)
-                .addGap(28, 28, 28)
+                .addGap(50, 50, 50)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(runServer, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(runClient, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -360,12 +361,7 @@ public class IVMonitoringGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jSeparator6)
             .addGroup(layout.createSequentialGroup()
@@ -373,9 +369,14 @@ public class IVMonitoringGUI extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addComponent(backBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jSeparator7)
+                .addContainerGap(389, Short.MAX_VALUE))
             .addComponent(jSeparator5)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jSeparator7)
+                .addContainerGap())
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jSeparator1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -384,11 +385,11 @@ public class IVMonitoringGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(backBtn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
                 .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -400,7 +401,7 @@ public class IVMonitoringGUI extends javax.swing.JFrame {
                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
 
         pack();
@@ -415,34 +416,12 @@ public class IVMonitoringGUI extends javax.swing.JFrame {
             resultField.setText("Please enter a nurse ID");
             return;
         }
-
-        // create a request
-        RequestAllStatus request = RequestAllStatus.newBuilder()
-                .setNurseId(nurseId)
-                .build();
-        // use a blockingstub to get response from server
-        Iterator<IVStatusResponse> responses = IVMonitoringClient.blockingStub.streamAllIVStatus(request);
-        StringBuilder result = new StringBuilder();
         
-        // loop the respones to display in the result field
-        while (responses.hasNext()) {
-            IVStatusResponse response = responses.next();
-            int status = response.getStatus();
-            String stringStatus = convertStatus(status);
-            result.append("ID: ").append(response.getPatientId())
-                    .append(", Name: ").append(response.getPatientName())
-                    .append(", Remaining: ").append(response.getRemaining()).append(" ml ")
-                    .append(", Status: ").append(stringStatus)
-                    .append("\n");
+        String res = IVMonitoringClient.requestAllVIStatus(nurseId);
+        resultField.setText(res);
 
-            // update the result
-            String res = result.toString();
-            javax.swing.SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    resultField.setText(res);
-                }
-            });
-        }
+        
+        
     }//GEN-LAST:event_allPatientBtnActionPerformed
 
     private void singlePatientBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_singlePatientBtnActionPerformed
@@ -456,38 +435,20 @@ public class IVMonitoringGUI extends javax.swing.JFrame {
         }
 
         // create a request
-        IVStatusRequest request = IVStatusRequest.newBuilder()
-                .setPatientId(patientId)
-                .build();
+//        IVStatusRequest request = IVStatusRequest.newBuilder()
+//                .setPatientId(patientId)
+//                .build();
 
         // use blockingstub send to server and get response
-        IVStatusResponse response = IVMonitoringClient.blockingStub.getIVStatus(request);
-        int status = response.getStatus();
-        String res = convertStatus(status);
+//        IVStatusResponse response = IVMonitoringClient.blockingStub.getIVStatus(request);
+//        int status = response.getStatus();
+//        String res = convertStatus(status);
         // display info in the gui
-        resultField.setText("Patient name: " + response.getPatientName()
-                + "\nRemaining is : " + response.getRemaining() + "ml"
-                + "\nStatus: " + res);
+        
+        String res = IVMonitoringClient.requestVIStatus(patientId);
+        resultField.setText(res);
     }//GEN-LAST:event_singlePatientBtnActionPerformed
-    private String convertStatus(int status){
-                // handle with the status
-        // 0 plenty, 1, alomost fnish 2 alert
-        String res = "";
-        switch (status) {
-            case 0:
-                res = "plenty";
-                break;
-            case 1:
-                res = "almost finish";
-                break;
-            case 2:
-                res = "watch out! this patient neeeds help!";
-                break;
-            default:
-                break;
-        }
-        return res;
-    }
+
     private void patientIdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientIdFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_patientIdFieldActionPerformed

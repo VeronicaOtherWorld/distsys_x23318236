@@ -41,6 +41,8 @@ public class HealthcareDailyClient {
     // for Unary RPC
     public static DailyHealthMonitoringServiceGrpc.DailyHealthMonitoringServiceBlockingStub blockingStub;
 
+    public static StreamObserver<PatientAlertRequest> requestObserver = null;
+
     public static void main(String[] args) throws InterruptedException, UnknownHostException, IOException {
         //1. find and connect to the discovery
         ServiceDiscovery.discoverGrpcService();
@@ -66,31 +68,32 @@ public class HealthcareDailyClient {
     // request patient information
     // unary
     // 1.send info to the server
-    public static void requestPatientData() {
+    public static String requestPatientData(String id, double heartRate, double pulse, double temperature) {
         System.out.println("------===== Requesting monitor patient data...=====----");
         CollectRequest collectionRequest = CollectRequest.newBuilder()
-                .setPatientId("001")
-                .setHeartRate(80.0)
-                .setPulse(75.0)
-                .setTemperature(37.2)
+                .setPatientId(id)
+                .setHeartRate(heartRate)
+                .setPulse(pulse)
+                .setTemperature(temperature)
                 .build();
         // call the method unary rpc
         CollectResponse temp = blockingStub.collectPatientData(collectionRequest);
 
         System.out.println("-------request result is : " + temp.getResult());
+        return "-------request result is : " + temp.getResult();
     }
 
     // 2.send a series of abnormal patients' information
-    public static void requestAbormalResult() throws InterruptedException {
+    public static StreamObserver<PatientAlertRequest> requestAbormalResult(String id, String name, String desc) throws InterruptedException {
 //        final CountDownLatch latch = new CountDownLatch(1);
         System.out.println("Client Streaming - requestAbormalResult ");
-
         // observer if we get the response
         StreamObserver<ReportStatusResponse> responseObserver = new StreamObserver<ReportStatusResponse>() {
             @Override
             public void onNext(ReportStatusResponse v) {
                 // get the message, tell us how many patients' they receive
                 System.out.println("------response from server------" + v.getMessage());
+                String msg = "------response from server------" + v.getMessage();
             }
 
             @Override
@@ -123,40 +126,19 @@ public class HealthcareDailyClient {
 
         // client uses asynchronous stub 
         // client can send request in onnext to ask response from server
-        StreamObserver<PatientAlertRequest> requestObserver = asyncStub.reportAbnormalPatients(responseObserver);
+        requestObserver = asyncStub.reportAbnormalPatients(responseObserver);
         try {
-            ArrayList abnormalPatients = new ArrayList();
             //add 1 patient
             requestObserver.onNext(PatientAlertRequest.newBuilder()
-                    .setPatientId("")
-                    .setPatientName("john")
-                    .setMessage("high press")
+                    .setPatientId(id)
+                    .setPatientName(name)
+                    .setMessage(desc)
                     .build());
-
-            Thread.sleep(500);
-
-            // number 2 patient
-            requestObserver.onNext(PatientAlertRequest.newBuilder()
-                    .setPatientId("088")
-                    .setPatientName("babel")
-                    .setMessage("cough")
-                    .build());
-
-            Thread.sleep(500);
-
-            // number 3 patient
-            requestObserver.onNext(PatientAlertRequest.newBuilder()
-                    .setPatientId("108")
-                    .setPatientName("kathy")
-                    .setMessage("back ache")
-                    .build());
-
-            Thread.sleep(500);
 
             // after finishing, tell server all done
             // requestObserver.onCompleted();
             // give enough time to send request
-            Thread.sleep(10000);
+            Thread.sleep(1000);
 
         } catch (RuntimeException e) {
             e.printStackTrace();
@@ -168,6 +150,7 @@ public class HealthcareDailyClient {
             requestObserver.onCompleted();
         }
 
+        return asyncStub.reportAbnormalPatients(responseObserver);
     }
     // 在 HealthcareDailyClient.java 中封装一个连接用的方法：
 
@@ -175,7 +158,7 @@ public class HealthcareDailyClient {
         if (channel != null && !channel.isShutdown()) {
             channel.shutdownNow();
         }
-        
+
         channel = ManagedChannelBuilder
                 .forAddress(host, port)
                 .usePlaintext()

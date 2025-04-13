@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  */
 public class HealthcareDailyGUI extends javax.swing.JFrame {
 
-    private StreamObserver<PatientAlertRequest> alertRequestObserver;
+    private StreamObserver<PatientAlertRequest> requestObserver;
 
     /**
      * Creates new form HealthcareDailyGUI
@@ -505,16 +505,16 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
         double temperature1 = Double.parseDouble(temperature);
 
         // create a request
-        CollectRequest request = CollectRequest.newBuilder()
-                .setPatientId(patientId)
-                .setHeartRate(heartRate1)
-                .setPulse(pulse1)
-                .setTemperature(temperature1)
-                .build();
-
+//        CollectRequest request = CollectRequest.newBuilder()
+//                .setPatientId(patientId)
+//                .setHeartRate(heartRate1)
+//                .setPulse(pulse1)
+//                .setTemperature(temperature1)
+//                .build();
         // use blockingstub send to server and get response
-        CollectResponse response = HealthcareDailyClient.blockingStub.collectPatientData(request);
-        String res = response.getResult();
+//        CollectResponse response = HealthcareDailyClient.blockingStub.collectPatientData(request);
+//        String res = response.getResult();
+        String res = HealthcareDailyClient.requestPatientData(patientId, heartRate1, pulse1, temperature1);
         System.out.println("**********************res******************" + res);
         resultArea.setText("Patient id: " + patientId
                 + "\nresult: " + res);
@@ -524,11 +524,12 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
 
     private void finishBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finishBtnActionPerformed
         // TODO add your handling code here:
-        
+
         // finish button
-        if (alertRequestObserver != null) {
-            alertRequestObserver.onCompleted();
+        if (requestObserver != null) {
+            requestObserver.onCompleted();
             resultArea.append("Finished sending all alerts.\n");
+            requestObserver = null;
         }
 
     }//GEN-LAST:event_finishBtnActionPerformed
@@ -563,7 +564,7 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
 
     private void runRegisterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runRegisterBtnActionPerformed
         // TODO add your handling code here:
-        
+
         //register
         Thread serverThread = new Thread(new Runnable() {
             public void run() {
@@ -600,9 +601,9 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
             return;
         }
         //init the observer to observer the response
-        if (alertRequestObserver == null) {
+        if (requestObserver == null) {
 
-            alertRequestObserver = HealthcareDailyClient.asyncStub
+            requestObserver = HealthcareDailyClient.asyncStub
                     .reportAbnormalPatients(new StreamObserver<ReportStatusResponse>() {
                         @Override
                         public void onNext(ReportStatusResponse v) {
@@ -624,7 +625,7 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
                         public void onCompleted() {
                             System.out.println("------------------------completed---------------------");
                             // finish clean the observer
-                            alertRequestObserver = null;
+                            requestObserver = null;
                         }
                     });
         }
@@ -636,9 +637,9 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
                 .setMessage(description)
                 .build();
 
-        alertRequestObserver.onNext(request);
-        
-        resultArea.append("----------Sent alert for patient: \n"
+        requestObserver.onNext(request);
+
+        resultArea.append("Sent alert patient: \n"
                 + "patient id: " + patientId + "\n"
                 + "patient name: " + patientName + "\n"
                 + "descrption: " + description + "\n");
@@ -651,20 +652,17 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
 
     private void resetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtnActionPerformed
         // TODO add your handling code here:
-
-        patientIdField.setText("");
-        rateField.setText("");
-        pulseField.setText("");
-        tempField.setText("");
+        patientIdField2.setText("");
+        patientNameField.setText("");
+        descField.setText("");
     }//GEN-LAST:event_resetBtnActionPerformed
 
     private void resetBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtn1ActionPerformed
         // TODO add your handling code here:
-        patientIdField2.setText("");
-        patientNameField.setText("");
-        descField.setText("");
-
-
+        patientIdField.setText("");
+        rateField.setText("");
+        pulseField.setText("");
+        tempField.setText("");
     }//GEN-LAST:event_resetBtn1ActionPerformed
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {
