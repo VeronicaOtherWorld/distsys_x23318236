@@ -11,17 +11,11 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 
-import grpc.generated.dailyhealthmonitoringservice.DailyHealthMonitoringServiceImpl;
 import grpc.generated.dailyhealthmonitoringservice.*;
 import grpc.generated.dailyhealthmonitoringservice.DailyHealthMonitoringServiceGrpc.DailyHealthMonitoringServiceImplBase;
-import static grpc.generated.dailyhealthmonitoringservice.DailyHealthMonitoringServiceGrpc.getReportAbnormalPatientsMethod;
 import io.grpc.Status;
-import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
 import java.util.ArrayList;
 import com.smart_healthcare.jmDNS.ServiceRegistration;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.util.Enumeration;
 import java.util.logging.Level;
 import javax.jmdns.JmDNS;
 

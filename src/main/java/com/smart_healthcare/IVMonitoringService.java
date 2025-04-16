@@ -12,13 +12,10 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 
-import grpc.generated.vimonitoringservice.IVMonitoringServiceImpl;
 import grpc.generated.vimonitoringservice.*;
 import grpc.generated.vimonitoringservice.IVMonitoringServiceGrpc.IVMonitoringServiceImplBase;
 import io.grpc.Context;
 import io.grpc.Status;
-import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
 import javax.jmdns.JmDNS;

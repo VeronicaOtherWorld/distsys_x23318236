@@ -4,7 +4,6 @@
  */
 package com.smart_healthcare;
 
-import com.google.common.base.Verify;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
@@ -19,10 +18,7 @@ import grpc.generated.dailyhealthmonitoringservice.ReportStatusResponse;
 import grpc.generated.dailyhealthmonitoringservice.DailyHealthMonitoringServiceGrpc;
 import grpc.generated.dailyhealthmonitoringservice.DailyHealthMonitoringServiceGrpc.*;
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
 
 import com.smart_healthcare.jmDNS.ServiceDiscovery;
 import io.jsonwebtoken.Jwts;

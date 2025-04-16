@@ -12,10 +12,8 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 
-import grpc.generated.aidiagnosticsservice.AIDiagnosticsServiceImpl;
 import grpc.generated.aidiagnosticsservice.*;
 import grpc.generated.aidiagnosticsservice.AIDiagnosticsServiceGrpc.AIDiagnosticsServiceImplBase;
-import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import javax.jmdns.JmDNS;

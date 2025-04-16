@@ -7,8 +7,6 @@ package com.smart_healthcare;
 import com.smart_healthcare.jmDNS.ServiceDiscovery;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import io.grpc.stub.StreamObserver;
-import java.time.LocalTime;
 import java.util.logging.Logger;
 // messages
 import grpc.generated.vimonitoringservice.IVStatusRequest;
@@ -17,7 +15,6 @@ import grpc.generated.vimonitoringservice.RequestAllStatus;
 
 import grpc.generated.vimonitoringservice.IVMonitoringServiceGrpc;
 
-import grpc.generated.vimonitoringservice.IVMonitoringServiceGrpc.IVMonitoringServiceBlockingStub;
 import io.grpc.Context;
 import io.grpc.Context.CancellableContext;
 import io.grpc.StatusRuntimeException;

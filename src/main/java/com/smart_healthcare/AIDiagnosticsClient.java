@@ -19,7 +19,6 @@ import grpc.generated.aidiagnosticsservice.AIDiagnosticsServiceGrpc;
 import grpc.generated.aidiagnosticsservice.AIDiagnosticsServiceGrpc.*;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -179,7 +178,7 @@ public class AIDiagnosticsClient {
         //can also use for Server Streaming asynchronously
         asyncStub = AIDiagnosticsServiceGrpc.newStub(channel)
                 .withCallCredentials(token)
-                .withDeadlineAfter(30, TimeUnit.SECONDS);
+                .withDeadlineAfter(60, TimeUnit.SECONDS);
 
 //        requestAverageTemperature();
 
