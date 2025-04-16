@@ -28,7 +28,7 @@ public class ServiceRegistration {
         register("_grpc._tcp.local.", "IVMonitoringService", 50051, "IV monitor health care");
         register("_grpc._tcp.local.", "AIDiagnoseticService", 50051, "AI Diagnosetic");
         // Wait a bit
-        Thread.sleep(1000);
+        Thread.sleep(500);
     }
 
     public static void register(String type, String serviceName, int port, String description) {

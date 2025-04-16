@@ -108,7 +108,8 @@ public class IVMonitoringClient {
             }
         } catch (StatusRuntimeException e) {
             logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
-            return "RPC failed: {0}";
+            return "RPC failed: " + e.getStatus().getCode() +
+                    ", Description: " + e.getStatus().getDescription();
         }
         return sb.toString();
     }
