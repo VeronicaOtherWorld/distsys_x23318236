@@ -32,7 +32,7 @@ public class ServiceDiscovery {
     private static class SampleListener implements ServiceListener {
 
         public void serviceAdded(ServiceEvent event) {
-            System.out.println("✅✅✅ Service Added: " + event.getName());
+            System.out.println("Service Added: " + event.getName());
             Thread t = new Thread(new Runnable() {
                 public void run() {
                     try {
@@ -68,15 +68,15 @@ public class ServiceDiscovery {
             switch (serviceName) {
                 case "HealthcareDailyService":
                     HealthcareDailyClient.connectToServer(host, port);
-//                    HealthcareDailyClient.requestPatientData();
+                // HealthcareDailyClient.requestPatientData();
                     break;
                 case "IVMonitoringService":
                     IVMonitoringClient.connectToServer(host, port);
-//                    IVMonitoringClient.requestVIStatus();
+                // IVMonitoringClient.requestVIStatus();
                     break;
                 case "AIDiagnosticsService":
                     AIDiagnosticsClient.connectToServer(host, port);
-//                    AIDiagnosticsClient.requestPatientInfo();
+                // AIDiagnosticsClient.requestPatientInfo();
                     break;
                 default:
                     System.out.println("Unknown service: " + serviceName);

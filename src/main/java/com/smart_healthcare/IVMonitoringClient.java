@@ -116,7 +116,7 @@ public class IVMonitoringClient {
 
     private static String convertStatus(int status) {
         // handle with the status
-        // 0 plenty, 1, alomost fnish 2 alert
+        // 0 plenty, 1, almost finish 2 alert
         String res = "";
         switch (status) {
             case 0:
@@ -126,7 +126,7 @@ public class IVMonitoringClient {
                 res = "almost finish";
                 break;
             case 2:
-                res = "watch out! this patient neeeds help!";
+                res = "watch out! this patient needs help!";
                 break;
             default:
                 break;
