@@ -45,7 +45,7 @@ public class AIDiagnosticsService extends AIDiagnosticsServiceImplBase {
             System.out.println("***** Server started, listening on" + port);
 
             // 2. register jsdns
-            ServiceRegistration.register("_grpc._tcp.local.", "AIDiagnosticsService", port, "gRPC AI Diagnosetic service");
+            ServiceRegistration.register("_grpc._tcp.local.", "AIDiagnosticsService", port, "AI Diagnosetic");
 
             server.awaitTermination();
 

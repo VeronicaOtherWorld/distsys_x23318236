@@ -109,11 +109,9 @@
                           <Component id="runBtn1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
                           <Component id="runBtn2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
-                          <Component id="runBtn3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="80" max="32767" attributes="0"/>
+                  <EmptySpace pref="215" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -126,7 +124,6 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="runBtn1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="runBtn2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="runBtn3" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="42" max="32767" attributes="0"/>
               </Group>
@@ -142,7 +139,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="33" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Before talking with AI, please click those 3 buttons at first."/>
+            <Property name="text" type="java.lang.String" value="Before talking with AI, please click those 2 buttons at first."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="runBtn1">
@@ -159,14 +156,6 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="runBtn2ActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="runBtn3">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="run registeration file"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="runBtn3ActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -272,7 +261,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
-            <Property name="text" type="java.lang.String" value="discription"/>
+            <Property name="text" type="java.lang.String" value="description "/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="idField">

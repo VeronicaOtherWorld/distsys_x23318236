@@ -49,7 +49,6 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         runServerBtn = new javax.swing.JButton();
         runClientBtn = new javax.swing.JButton();
-        runRegisterBtn = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -123,7 +122,7 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
         jLabel2.setBackground(new java.awt.Color(255, 255, 204));
         jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel2.setText("Before monitoring one or all patitent(s), please click those 3 buttons at first.");
+        jLabel2.setText("Before monitoring one or all patitent(s), please click those 2 buttons at first.");
 
         runServerBtn.setText("run server");
         runServerBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -136,13 +135,6 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
         runClientBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 runClientBtnActionPerformed(evt);
-            }
-        });
-
-        runRegisterBtn.setText("run service registeration file");
-        runRegisterBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                runRegisterBtnActionPerformed(evt);
             }
         });
 
@@ -159,9 +151,7 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
                         .addGap(111, 111, 111)
                         .addComponent(runServerBtn)
                         .addGap(74, 74, 74)
-                        .addComponent(runClientBtn)
-                        .addGap(69, 69, 69)
-                        .addComponent(runRegisterBtn)))
+                        .addComponent(runClientBtn)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -172,8 +162,7 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(runServerBtn)
-                    .addComponent(runClientBtn)
-                    .addComponent(runRegisterBtn))
+                    .addComponent(runClientBtn))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
@@ -562,22 +551,6 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
         serverThread.start();
     }//GEN-LAST:event_runClientBtnActionPerformed
 
-    private void runRegisterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runRegisterBtnActionPerformed
-        // TODO add your handling code here:
-
-        //register
-        Thread serverThread = new Thread(new Runnable() {
-            public void run() {
-                try {
-                    ServiceRegistration.main(new String[]{});
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(HealthcareDailyGUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-        serverThread.start();
-    }//GEN-LAST:event_runRegisterBtnActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         HealthcareDailyClient.disconnect();
@@ -753,7 +726,6 @@ public class HealthcareDailyGUI extends javax.swing.JFrame {
     private javax.swing.JButton resetBtn1;
     private javax.swing.JTextArea resultArea;
     private javax.swing.JButton runClientBtn;
-    private javax.swing.JButton runRegisterBtn;
     private javax.swing.JButton runServerBtn;
     private javax.swing.JButton send2Btn;
     private javax.swing.JTextField tempField;

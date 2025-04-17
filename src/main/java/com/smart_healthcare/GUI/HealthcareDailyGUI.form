@@ -150,8 +150,6 @@
                           <Component id="runServerBtn" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
                           <Component id="runClientBtn" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
-                          <Component id="runRegisterBtn" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -167,7 +165,6 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="runServerBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="runClientBtn" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="runRegisterBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="23" max="32767" attributes="0"/>
               </Group>
@@ -186,7 +183,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="33" green="33" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Before monitoring one or all patitent(s), please click those 3 buttons at first."/>
+            <Property name="text" type="java.lang.String" value="Before monitoring one or all patitent(s), please click those 2 buttons at first."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="runServerBtn">
@@ -203,14 +200,6 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="runClientBtnActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="runRegisterBtn">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="run service registeration file"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="runRegisterBtnActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

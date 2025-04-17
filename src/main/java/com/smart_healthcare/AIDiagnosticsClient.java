@@ -71,44 +71,6 @@ public class AIDiagnosticsClient {
                 System.out.println("------stream is completed------");
             }
         };
-
-        // start sending the result
-//        StreamObserver<PatientDataRequest> requestObserver = asyncStub.streamPatientData(responseObserver);
-//        try {
-//            requestObserver.onNext(PatientDataRequest.newBuilder()
-//                    .setPatientId("800")
-//                    .setDataType("Medical history")
-//                    .setValue("There are heart disease patients in the family.")
-//                    .build());
-//
-//            Thread.sleep(500);
-//
-//            requestObserver.onNext(PatientDataRequest.newBuilder()
-//                    .setPatientId("800")
-//                    .setDataType("Physical examination")
-//                    .setValue("Abnormal heartbeat, a murmur in the heart.")
-//                    .build());
-//
-//            Thread.sleep(500);
-//
-//            requestObserver.onNext(PatientDataRequest.newBuilder()
-//                    .setPatientId("800")
-//                    .setDataType("Lab tests")
-//                    .setValue("The levels of serum cardiac enzymes were increased significantly.")
-//                    .build());
-//
-//            Thread.sleep(500);
-//
-//            // after finishing, tell server all done
-//            requestObserver.onCompleted();
-//
-//            // give enough time to send request
-//            Thread.sleep(1000);
-//        } catch (RuntimeException e) {
-//            e.printStackTrace();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
         return asyncStub.streamPatientData(responseObserver);
     }
 
@@ -154,7 +116,7 @@ public class AIDiagnosticsClient {
                     .build();
             requestObserver.onNext(request);
         }
-        Thread.sleep(1000);
+        Thread.sleep(200);
 //        channel.shutdown();
 
     }
@@ -178,7 +140,7 @@ public class AIDiagnosticsClient {
         //can also use for Server Streaming asynchronously
         asyncStub = AIDiagnosticsServiceGrpc.newStub(channel)
                 .withCallCredentials(token)
-                .withDeadlineAfter(60, TimeUnit.SECONDS);
+                .withDeadlineAfter(100, TimeUnit.SECONDS);
 
 //        requestAverageTemperature();
 
@@ -193,7 +155,7 @@ public class AIDiagnosticsClient {
     public static void disconnect() {
         if (channel != null) {
             channel.shutdownNow();
-            System.out.println("****************IVMonitoringServiceGrpc channel shutdown***************");
+            System.out.println("****************AIDiagnosticsServiceGrpc channel shutdown***************");
         }
     }
 

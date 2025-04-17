@@ -87,7 +87,7 @@
           <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanel4" alignment="0" min="-2" pref="852" max="-2" attributes="0"/>
+                  <Component id="jPanel4" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jPanel3" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -455,9 +455,7 @@
                           <Component id="runServer" min="-2" pref="131" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                           <Component id="runClient" min="-2" pref="131" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="runRegister" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="271" max="-2" attributes="0"/>
+                          <EmptySpace min="271" pref="436" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -472,7 +470,6 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="runServer" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                       <Component id="runClient" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
-                      <Component id="runRegister" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="25" max="32767" attributes="0"/>
               </Group>
@@ -491,7 +488,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="33" green="33" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Before getting the IV status of one or all patitent(s), please click those 3 buttons at first."/>
+            <Property name="text" type="java.lang.String" value="Before getting the IV status of one or all patitent(s), please click those 2 buttons at first."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="runServer">
@@ -526,23 +523,6 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="runClientActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="runRegister">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="97" green="c4" red="f0" type="rgb"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica Neue" size="13" style="1"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="33" green="33" red="ff" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="run service registeration file"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="runRegisterActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

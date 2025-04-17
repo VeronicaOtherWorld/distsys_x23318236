@@ -55,6 +55,7 @@ public class ServiceDiscovery {
         public void serviceResolved(ServiceEvent event) {
             System.out.println("🎯🎯🎯 Service resolved: " + event.getInfo());
 
+            
             ServiceInfo info = event.getInfo();
             String serviceName = event.getName();
 
@@ -73,7 +74,7 @@ public class ServiceDiscovery {
                     IVMonitoringClient.connectToServer(host, port);
 //                    IVMonitoringClient.requestVIStatus();
                     break;
-                case "AIDiagnoseticService":
+                case "AIDiagnosticsService":
                     AIDiagnosticsClient.connectToServer(host, port);
 //                    AIDiagnosticsClient.requestPatientInfo();
                     break;
@@ -85,7 +86,7 @@ public class ServiceDiscovery {
 
     public static void discoverGrpcService() {
 
-        System.out.println("🟢 listening...");
+        System.out.println("listening...");
         try {
 
             // Create a JmDNS instance

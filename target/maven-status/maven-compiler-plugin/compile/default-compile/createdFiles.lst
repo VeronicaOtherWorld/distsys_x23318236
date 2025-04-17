@@ -23,7 +23,6 @@ com/smart_healthcare/GUI/IVMonitoringGUI$2.class
 com/smart_healthcare/AIDiagnosticsService.class
 grpc/generated/aidiagnosticsservice/AIDiagnosticsServiceGrpc$MethodHandlers.class
 com/smart_healthcare/GUI/AIDiagnosticsGUI$13.class
-com/smart_healthcare/GUI/IVMonitoringGUI$11.class
 grpc/generated/aidiagnosticsservice/AIDiagnosticsServiceGrpc.class
 com/smart_healthcare/AuthorizationServerInterceptor$1.class
 grpc/generated/aidiagnosticsservice/AIDiagnosticsServiceGrpc$AIDiagnosticsServiceFileDescriptorSupplier.class
@@ -57,7 +56,6 @@ grpc/generated/dailyhealthmonitoringservice/DailyHealthMonitoringServiceGrpc.cla
 com/smart_healthcare/GUI/HealthcareDailyGUI$3.class
 com/smart_healthcare/GUI/MainGUI$3.class
 grpc/generated/vimonitoringservice/IVStatusResponse$1.class
-com/smart_healthcare/GUI/HealthcareDailyGUI$14.class
 com/smart_healthcare/AIDiagnosticsClient$1.class
 grpc/generated/aidiagnosticsservice/AIResponseOrBuilder.class
 com/smart_healthcare/GUI/AIDiagnosticsGUI$6.class
@@ -78,7 +76,6 @@ com/smart_healthcare/GUI/IVMonitoringGUI$4.class
 grpc/generated/aidiagnosticsservice/AIDiagnosticsResponse$1.class
 com/smart_healthcare/AIDiagnosticsService$2.class
 com/smart_healthcare/GUI/IVMonitoringGUI$3.class
-com/smart_healthcare/GUI/HealthcareDailyGUI$15.class
 grpc/generated/aidiagnosticsservice/DoctorRequest$Builder.class
 com/smart_healthcare/GUI/MainGUI$1.class
 com/smart_healthcare/GUI/AIDiagnosticsGUI$5.class
@@ -121,13 +118,11 @@ grpc/generated/vimonitoringservice/IVMonitoringServiceGrpc$IVMonitoringServiceMe
 com/smart_healthcare/GUI/HealthcareDailyGUI$7.class
 grpc/generated/dailyhealthmonitoringservice/ReportStatusResponse$Builder.class
 com/smart_healthcare/GUI/HealthcareDailyGUI.class
-com/smart_healthcare/GUI/IVMonitoringGUI$10.class
 grpc/generated/aidiagnosticsservice/AIDiagnosticsServiceGrpc$AIDiagnosticsServiceStub.class
 grpc/generated/vimonitoringservice/IVStatusRequest$1.class
 grpc/generated/dailyhealthmonitoringservice/DailyHealthMonitoringServiceGrpc$DailyHealthMonitoringServiceMethodDescriptorSupplier.class
 grpc/generated/dailyhealthmonitoringservice/DailyHealthMonitoringServiceGrpc$DailyHealthMonitoringServiceImplBase.class
 grpc/generated/vimonitoringservice/IVMonitoringServiceImpl.class
-com/smart_healthcare/GUI/AIDiagnosticsGUI$16.class
 com/smart_healthcare/jmDNS/ServiceDiscovery$SampleListener.class
 grpc/generated/aidiagnosticsservice/DoctorRequest.class
 com/smart_healthcare/GUI/IVMonitoringGUI$8.class
@@ -144,7 +139,6 @@ com/smart_healthcare/AIDiagnosticsClient.class
 grpc/generated/dailyhealthmonitoringservice/CollectResponse$Builder.class
 grpc/generated/dailyhealthmonitoringservice/DailyHealthMonitoringServiceGrpc$DailyHealthMonitoringServiceBlockingStub.class
 com/smart_healthcare/GUI/HealthcareDailyGUI$11.class
-com/smart_healthcare/GUI/AIDiagnosticsGUI$15.class
 grpc/generated/dailyhealthmonitoringservice/DailyHealthMonitoringServiceGrpc$DailyHealthMonitoringServiceFileDescriptorSupplier.class
 grpc/generated/vimonitoringservice/IVMonitoringServiceGrpc.class
 com/smart_healthcare/GUI/IVMonitoringGUI$1.class

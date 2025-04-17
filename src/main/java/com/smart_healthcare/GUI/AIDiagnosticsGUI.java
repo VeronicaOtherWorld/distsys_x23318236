@@ -46,7 +46,6 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         runBtn1 = new javax.swing.JButton();
         runBtn2 = new javax.swing.JButton();
-        runBtn3 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jPanel2 = new javax.swing.JPanel();
@@ -93,7 +92,7 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
 
         jLabel12.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 51));
-        jLabel12.setText("Before talking with AI, please click those 3 buttons at first.");
+        jLabel12.setText("Before talking with AI, please click those 2 buttons at first.");
 
         runBtn1.setText("run server");
         runBtn1.addActionListener(new java.awt.event.ActionListener() {
@@ -106,13 +105,6 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
         runBtn2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 runBtn2ActionPerformed(evt);
-            }
-        });
-
-        runBtn3.setText("run registeration file");
-        runBtn3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                runBtn3ActionPerformed(evt);
             }
         });
 
@@ -129,10 +121,8 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
                         .addGap(91, 91, 91)
                         .addComponent(runBtn1)
                         .addGap(75, 75, 75)
-                        .addComponent(runBtn2)
-                        .addGap(82, 82, 82)
-                        .addComponent(runBtn3)))
-                .addContainerGap(80, Short.MAX_VALUE))
+                        .addComponent(runBtn2)))
+                .addContainerGap(215, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,8 +132,7 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(runBtn1)
-                    .addComponent(runBtn2)
-                    .addComponent(runBtn3))
+                    .addComponent(runBtn2))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
 
@@ -157,7 +146,7 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
 
         jLabel7.setText("data type");
 
-        jLabel8.setText("discription");
+        jLabel8.setText("description ");
 
         idField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -566,22 +555,6 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
         serverThread.start();
     }//GEN-LAST:event_runBtn2ActionPerformed
 
-    private void runBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runBtn3ActionPerformed
-        // TODO add your handling code here:
-        // regsiter
-
-        Thread serverThread = new Thread(new Runnable() {
-            public void run() {
-                try {
-                    ServiceRegistration.main(new String[]{});
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(HealthcareDailyGUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-        serverThread.start();
-    }//GEN-LAST:event_runBtn3ActionPerformed
-
     private void quitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitBtnActionPerformed
         // TODO add your handling code here:
         
@@ -661,7 +634,6 @@ public class AIDiagnosticsGUI extends javax.swing.JFrame {
     private javax.swing.JTextArea resArea;
     private javax.swing.JButton runBtn1;
     private javax.swing.JButton runBtn2;
-    private javax.swing.JButton runBtn3;
     private javax.swing.JButton sendBtn;
     private javax.swing.JTextField typeField;
     // End of variables declaration//GEN-END:variables

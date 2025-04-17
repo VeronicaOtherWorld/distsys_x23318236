@@ -74,7 +74,6 @@ public static CancellableContext withCancellation;
         jLabel9 = new javax.swing.JLabel();
         runServer = new javax.swing.JButton();
         runClient = new javax.swing.JButton();
-        runRegister = new javax.swing.JButton();
         jSeparator7 = new javax.swing.JSeparator();
         backBtn = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
@@ -294,7 +293,7 @@ public static CancellableContext withCancellation;
         jLabel9.setBackground(new java.awt.Color(255, 255, 204));
         jLabel9.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel9.setText("Before getting the IV status of one or all patitent(s), please click those 3 buttons at first.");
+        jLabel9.setText("Before getting the IV status of one or all patitent(s), please click those 2 buttons at first.");
 
         runServer.setBackground(new java.awt.Color(240, 196, 151));
         runServer.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
@@ -316,16 +315,6 @@ public static CancellableContext withCancellation;
             }
         });
 
-        runRegister.setBackground(new java.awt.Color(240, 196, 151));
-        runRegister.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        runRegister.setForeground(new java.awt.Color(255, 51, 51));
-        runRegister.setText("run service registeration file");
-        runRegister.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                runRegisterActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -340,9 +329,7 @@ public static CancellableContext withCancellation;
                         .addComponent(runServer, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)
                         .addComponent(runClient, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(runRegister)
-                        .addGap(271, 271, 271))))
+                        .addGap(271, 436, Short.MAX_VALUE))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,8 +339,7 @@ public static CancellableContext withCancellation;
                 .addGap(26, 26, 26)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(runServer, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(runClient, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(runRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(runClient, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
@@ -384,7 +370,7 @@ public static CancellableContext withCancellation;
             .addComponent(jSeparator1)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 852, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -490,21 +476,6 @@ public static CancellableContext withCancellation;
         serverThread.start();
     }//GEN-LAST:event_runClientActionPerformed
 
-    private void runRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runRegisterActionPerformed
-
-        // TODO add your handling code here:
-        Thread serverThread = new Thread(new Runnable() {
-            public void run() {
-                try {
-                    ServiceRegistration.main(new String[]{});
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(IVMonitoringGUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-        serverThread.start();
-    }//GEN-LAST:event_runRegisterActionPerformed
-
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
         IVMonitoringClient.disconnect();
@@ -595,7 +566,6 @@ public static CancellableContext withCancellation;
     private javax.swing.JTextField patientIdField;
     private javax.swing.JTextArea resultField;
     private javax.swing.JButton runClient;
-    private javax.swing.JButton runRegister;
     private javax.swing.JButton runServer;
     private javax.swing.JButton singlePatientBtn;
     // End of variables declaration//GEN-END:variables

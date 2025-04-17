@@ -46,7 +46,9 @@ public class HealthcareDailyService extends DailyHealthMonitoringServiceImplBase
             System.out.println("***** Server started, listening on" + port);
 
             // 2. register jsdns
-            ServiceRegistration.register("_grpc._tcp.local.", "HealthcareDailyService", port, "gRPC daily healthcare service");
+            ServiceRegistration.register("_grpc._tcp.local.",
+                    "HealthcareDailyService", port,
+                    "gRPC daily healthcare service");
 
             server.awaitTermination();
 
