@@ -54,7 +54,7 @@ public class ServiceDiscovery {
         }
 
         public void serviceResolved(ServiceEvent event) {
-            System.out.println("🎯🎯🎯 Service resolved: " + event.getInfo());
+            System.out.println("Service resolved: " + event.getInfo());
 
             
             ServiceInfo info = event.getInfo();
@@ -63,7 +63,7 @@ public class ServiceDiscovery {
             String host = info.getHostAddresses()[0];
             int port = info.getPort();
 
-            System.out.println("🎯🎯🎯 Service Resolved: host=" + host + " port=" + port);
+            System.out.println("Service Resolved: host=" + host + " port=" + port);
 
             // call the method in the client side to create the channel
             switch (serviceName) {

@@ -29,7 +29,7 @@ public class AuthorizationServerInterceptor implements ServerInterceptor {
     public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(ServerCall<ReqT, RespT> serverCall, 
             Metadata metadata, ServerCallHandler<ReqT, RespT> serverCallHandler) {
         String value = metadata.get(Constants.AUTHORIZATION_METADATA_KEY);
-        System.out.println("✅✅✅✅ Token received from client: " + value);
+        System.out.println("Token received from client: " + value);
         Status status;
         if (value == null) {
             status = Status.UNAUTHENTICATED.withDescription("Authorization token is missing");
