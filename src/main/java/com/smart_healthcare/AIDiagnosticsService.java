@@ -14,6 +14,9 @@ import io.grpc.stub.StreamObserver;
 
 import grpc.generated.aidiagnosticsservice.*;
 import grpc.generated.aidiagnosticsservice.AIDiagnosticsServiceGrpc.AIDiagnosticsServiceImplBase;
+import io.grpc.Grpc;
+import io.grpc.TlsServerCredentials;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import javax.jmdns.JmDNS;
@@ -36,7 +39,13 @@ public class AIDiagnosticsService extends AIDiagnosticsServiceImplBase {
 
         // add authentication
         try {
-            server = ServerBuilder.forPort(port)
+            server = Grpc.newServerBuilderForPort(port,
+                    TlsServerCredentials.create(
+                            //public key
+                            new File("server.crt"),
+                            //private key
+                            new File("server.pem")
+                    ))
                     .addService(aiserver)
                     .intercept(new AuthorizationServerInterceptor())
                     .build()
@@ -130,8 +139,8 @@ public class AIDiagnosticsService extends AIDiagnosticsServiceImplBase {
             public void onNext(DoctorRequest v) {
                 String doctorMsg = v.getMessage();
                 // simuate the response
-                String reply = "Doctor id: " + v.getDoctorId() + 
-                        "\nAI's advice: pay attention to " + doctorMsg + ".";
+                String reply = "Doctor id: " + v.getDoctorId()
+                        + "\nAI's advice: pay attention to " + doctorMsg + ".";
                 System.out.println("doctor request send message "
                         + " id: " + v.getDoctorId()
                         + " message: " + v.getMessage());
@@ -140,7 +149,7 @@ public class AIDiagnosticsService extends AIDiagnosticsServiceImplBase {
                 } catch (InterruptedException ex) {
                     Logger.getLogger(AIDiagnosticsService.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
                 AIResponse response = AIResponse.newBuilder()
                         .setDoctorId(v.getDoctorId())
                         .setAnswer(reply)

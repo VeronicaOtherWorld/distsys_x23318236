@@ -17,10 +17,14 @@ import grpc.generated.aidiagnosticsservice.AIResponse;
 
 import grpc.generated.aidiagnosticsservice.AIDiagnosticsServiceGrpc;
 import grpc.generated.aidiagnosticsservice.AIDiagnosticsServiceGrpc.*;
+import io.grpc.netty.shaded.io.grpc.netty.GrpcSslContexts;
+import io.grpc.netty.shaded.io.grpc.netty.NettyChannelBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import java.io.File;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+import javax.net.ssl.SSLException;
 
 /**
  *
@@ -121,14 +125,18 @@ public class AIDiagnosticsClient {
 
     }
 
-    public static void connectToServer(String host, int port) {
+    public static void connectToServer(String host, int port) throws SSLException {
         if (channel != null && !channel.isShutdown()) {
             channel.shutdownNow();
         }
-        
-        channel = ManagedChannelBuilder
-                .forAddress(host, port)
-                .usePlaintext()
+
+        channel = NettyChannelBuilder.forAddress(host, port)
+                .sslContext(GrpcSslContexts.forClient()
+                        // trust the certificate owner
+                        .trustManager(new File("ca.pem"))
+                        .build())
+                // match server.crt CN
+                .overrideAuthority("foo.test.google.fr") 
                 .build();
 
         String jwt = getJwt();
@@ -143,7 +151,6 @@ public class AIDiagnosticsClient {
                 .withDeadlineAfter(100, TimeUnit.SECONDS);
 
 //        requestAverageTemperature();
-
         // in case the not responsed stub block the progress, add timeout
         // if does not response after 30 sec, automatically finish
         blockingStub = AIDiagnosticsServiceGrpc.newBlockingStub(channel)

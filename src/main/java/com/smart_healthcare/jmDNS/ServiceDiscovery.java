@@ -25,6 +25,7 @@ import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
+import javax.net.ssl.SSLException;
 
 // This code is adapted from https://github.com/jmdns/jmdns
 public class ServiceDiscovery {
@@ -75,9 +76,16 @@ public class ServiceDiscovery {
                 // IVMonitoringClient.requestVIStatus();
                     break;
                 case "AIDiagnosticsService":
-                    AIDiagnosticsClient.connectToServer(host, port);
+                {
+                    try {
+                        AIDiagnosticsClient.connectToServer(host, port);
+                    } catch (SSLException ex) {
+                        Logger.getLogger(ServiceDiscovery.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 // AIDiagnosticsClient.requestPatientInfo();
                     break;
+
                 default:
                     System.out.println("Unknown service: " + serviceName);
             }
