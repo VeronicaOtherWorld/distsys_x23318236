@@ -24,6 +24,7 @@ import com.smart_healthcare.jmDNS.ServiceDiscovery;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.concurrent.TimeUnit;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -81,7 +82,7 @@ public class HealthcareDailyClient {
     }
 
     // 2.send a series of abnormal patients' information
-    public static StreamObserver<PatientAlertRequest> requestAbormalResult(String id, String name, String desc) throws InterruptedException {
+    public static StreamObserver<PatientAlertRequest> requestAbormalResult(String id, String name, String desc, JTextArea resArea) throws InterruptedException {
 //        final CountDownLatch latch = new CountDownLatch(1);
         System.out.println("Client Streaming - requestAbormalResult ");
         // observer if we get the response
@@ -91,6 +92,7 @@ public class HealthcareDailyClient {
                 // get the message, tell us how many patients' they receive
                 System.out.println("------response from server------" + v.getMessage());
                 String msg = "------response from server------" + v.getMessage();
+                resArea.append(msg);
             }
 
             @Override
@@ -147,9 +149,8 @@ public class HealthcareDailyClient {
             requestObserver.onCompleted();
         }
 
-        return asyncStub.reportAbnormalPatients(responseObserver);
+        return requestObserver;
     }
-    // 在 HealthcareDailyClient.java 中封装一个连接用的方法：
 
     public static void connectToServer(String host, int port) {
         if (channel != null && !channel.isShutdown()) {
