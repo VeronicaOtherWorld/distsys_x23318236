@@ -153,12 +153,12 @@ public class IVMonitoringClient {
         //the deadline time out time is 30 sec
         asyncStub = IVMonitoringServiceGrpc.newStub(channel)
                 .withCallCredentials(token)
-                .withDeadlineAfter(30, TimeUnit.SECONDS);
+                .withDeadlineAfter(60, TimeUnit.SECONDS);
 
         //        requestAverageTemperature();
         blockingStub = IVMonitoringServiceGrpc.newBlockingStub(channel)
                 .withCallCredentials(token)
-                .withDeadlineAfter(30, TimeUnit.SECONDS);
+                .withDeadlineAfter(60, TimeUnit.SECONDS);
         System.out.println("--------connect to grpc--------- " + host + ":" + port);
     }
 

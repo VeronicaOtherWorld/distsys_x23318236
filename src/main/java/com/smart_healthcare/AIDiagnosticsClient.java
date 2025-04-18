@@ -135,7 +135,7 @@ public class AIDiagnosticsClient {
         // if does not response after 30 sec, automatically finish
         blockingStub = AIDiagnosticsServiceGrpc.newBlockingStub(channel)
                 .withCallCredentials(token)
-                .withDeadlineAfter(30, TimeUnit.SECONDS);
+                .withDeadlineAfter(60, TimeUnit.SECONDS);
         System.out.println("--------connect to grpc--------- " + host + ":" + port);
     }
 

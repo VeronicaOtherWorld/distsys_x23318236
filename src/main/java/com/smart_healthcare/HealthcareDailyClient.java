@@ -137,7 +137,7 @@ public class HealthcareDailyClient {
             // after finishing, tell server all done
             // requestObserver.onCompleted();
             // give enough time to send request
-            Thread.sleep(1000);
+            Thread.sleep(2000);
 
         } catch (RuntimeException e) {
             e.printStackTrace();
@@ -167,10 +167,10 @@ public class HealthcareDailyClient {
 
         asyncStub = DailyHealthMonitoringServiceGrpc.newStub(channel)
                 .withCallCredentials(token)
-                .withDeadlineAfter(30, TimeUnit.SECONDS);
+                .withDeadlineAfter(60, TimeUnit.SECONDS);
         blockingStub = DailyHealthMonitoringServiceGrpc.newBlockingStub(channel)
                 .withCallCredentials(token)
-                .withDeadlineAfter(30, TimeUnit.SECONDS); // connect
+                .withDeadlineAfter(60, TimeUnit.SECONDS); // connect
         System.out.println("--------connect to grpc--------- " + host + ":" + port);
     }
 
