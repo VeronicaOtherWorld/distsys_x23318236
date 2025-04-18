@@ -95,7 +95,7 @@ public class AIDiagnosticsService extends AIDiagnosticsServiceImplBase {
 
             @Override
             public void onError(Throwable thrwbl) {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from 
+                thrwbl.printStackTrace();
             }
 
             @Override

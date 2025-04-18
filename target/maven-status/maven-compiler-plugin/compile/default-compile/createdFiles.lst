@@ -9,7 +9,6 @@ grpc/generated/dailyhealthmonitoringservice/DailyHealthMonitoringServiceGrpc$Dai
 grpc/generated/dailyhealthmonitoringservice/DailyHealthMonitoringServiceGrpc$1.class
 com/smart_healthcare/GUI/MainGUI.class
 com/smart_healthcare/HealthcareDailyService$1.class
-com/smart_healthcare/AIDiagnosticsClient$2.class
 com/smart_healthcare/IVMonitoringService.class
 grpc/generated/aidiagnosticsservice/AIResponse$Builder.class
 com/smart_healthcare/HealthcareDailyClient$2.class
