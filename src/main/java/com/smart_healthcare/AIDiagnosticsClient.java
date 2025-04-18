@@ -55,26 +55,6 @@ public class AIDiagnosticsClient {
         System.out.println("--------Client Streaming - send info to server ------");
 
         //obseration teh result
-//        responseObserver = new StreamObserver<AIDiagnosticsResponse>() {
-//            @Override
-//            public void onNext(AIDiagnosticsResponse v) {
-//                // get the response
-//                System.out.println("------response from server------\n "
-//                        + "patient id: " + v.getPatientId()
-//                        + "diagnosis: " + v.getDiagnosis()
-//                        + "recommendation: " + v.getRecommendation());
-//            }
-//
-//            @Override
-//            public void onError(Throwable thrwbl) {
-//                thrwbl.printStackTrace();
-//            }
-//
-//            @Override
-//            public void onCompleted() {
-//                System.out.println("------stream is completed------");
-//            }
-//        };
         return asyncStub.streamPatientData(responseObserver);
     }
 
